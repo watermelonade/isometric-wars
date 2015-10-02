@@ -40,9 +40,8 @@ public class turn_controller : MonoBehaviour {
 	
 	}
 
-	void Tile_Clicked (Vector3 position){
+	void TileClicked (Vector3 position){
 		player.transform.position = position + offset;
-
 	}
 	
 }
