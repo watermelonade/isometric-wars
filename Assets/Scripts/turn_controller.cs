@@ -4,7 +4,8 @@ using System.Collections;
 public class turn_controller : MonoBehaviour {
 
 	public GameObject player;
-	public GameObject camera;
+
+	private Vector3 offset = new Vector3(0.0f, 1.5f, 0.0f);
 
 	// Use this for initialization
 	void Start () {
@@ -39,12 +40,9 @@ public class turn_controller : MonoBehaviour {
 	
 	}
 
-	/*
-	Vector3 get_cursor_position () {
-		Vector3 cam_position = camera.transform.position;
-		return;
+	void Tile_Clicked (Vector3 position){
+		player.transform.position = position + offset;
 
-	
-	}*/
+	}
 	
 }
