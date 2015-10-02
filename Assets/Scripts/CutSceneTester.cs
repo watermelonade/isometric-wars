@@ -62,28 +62,27 @@ public class CutSceneTester : MonoBehaviour
         
         if (Input.GetKeyDown("space"))
         {
-            
-            if(linenum >= lines.Count)
-            {
-                Application.Quit();
-            }
 
-            string s = lines[++linenum];
-            string[] tmp = Regex.Split(s, @": ");
-            
-
-            if(tmp[0] != prevspeaker)
+            if (linenum < lines.Count)
             {
-                cut.ChangeSpeaker();
-                box.SetText(tmp[1]);
-            }
-            else
-            {
-                box.SetText(tmp[1]);
-            }
 
-            prevspeaker = tmp[0];
-            //box.SetText(lines[linenum++]);
+                string s = lines[++linenum];
+                string[] tmp = Regex.Split(s, @": ");
+
+
+                if (tmp[0] != prevspeaker)
+                {
+                    cut.ChangeSpeaker();
+                    box.SetText(tmp[1]);
+                }
+                else
+                {
+                    box.SetText(tmp[1]);
+                }
+
+                prevspeaker = tmp[0];
+                //box.SetText(lines[linenum++]);
+            }
         }
         
         
