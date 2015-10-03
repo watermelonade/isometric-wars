@@ -32,13 +32,13 @@ public class MouseClick : MonoBehaviour {
     }
 
 	void OnMouseDown(){
-		//rend.material.shader = Shader.Find ("Specular");
-		//rend.material.SetColor ("_SpecColor", Color.red);
-		//transform.position = new Vector3 (0.0f, 0.0f, 0.0f);
-		//rend.material.color = Color.red;
-		//enable = false;
-		/*if(enable)
-			GameObject.Find("TurnController").SendMessage("Tile_Clicked", gameObject.transform.position);
-	    */
+        //rend.material.shader = Shader.Find ("Specular");
+        //rend.material.SetColor ("_SpecColor", Color.red);
+        //transform.position = new Vector3 (0.0f, 0.0f, 0.0f);
+        //rend.material.color = Color.red;
+        //enable = false;
+        if (enable)
+            GameObject.Find("Main Camera").SendMessage("TileClicked", gameObject.transform.position);
+	    
     }
 }
