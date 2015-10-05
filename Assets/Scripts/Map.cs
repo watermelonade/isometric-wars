@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Text.RegularExpressions;
+using System;
 
 public class Map : MonoBehaviour {
 
@@ -70,4 +71,70 @@ public class Map : MonoBehaviour {
         Build();  
           
     }
+
+    public void HighlightRadius(int radius, Vector3 center)
+    {
+        int cx = (int)center.x;
+        int cy = (int)center.y;
+        int r2 = radius * radius;
+
+        int x = 0;
+        int y = radius;
+        int p = (5 - radius * 4) / 4;
+
+        circleTiles(cx, cy, x, y);
+        while (x < y)
+        {
+            x++;
+            if(p < 0)
+            {
+                p += 2 * x + 1;
+            } else
+            {
+                y--;
+                p += 2 * (x - y) + 1;
+
+            }
+            circleTiles(cx, cy, x, y);
+        }
+    }
+
+    internal void circleTiles(int cx, int cy, int x, int y)
+    {
+        try
+        {
+
+
+            if (x == 0)
+            {
+                board[cx, cy + y].GetComponent<MouseClick>().Highlight();
+                board[cx, cy - y].GetComponent<MouseClick>().Highlight();
+                board[cx + y, cy].GetComponent<MouseClick>().Highlight();
+                board[cx - cy, cy].GetComponent<MouseClick>().Highlight();
+            } else if (x == y)
+            {
+                board[cx + x, cy + y].GetComponent<MouseClick>().Highlight();
+                board[cx - x, cy + y].GetComponent<MouseClick>().Highlight();
+                board[cx + x, cy - y].GetComponent<MouseClick>().Highlight();
+                board[cx - y, cy - y].GetComponent<MouseClick>().Highlight();
+            } else if (x < y)
+            {
+                board[cx + x, cy + y].GetComponent<MouseClick>().Highlight();
+                board[cx - x, cy + y].GetComponent<MouseClick>().Highlight();
+                board[cx + x, cy - y].GetComponent<MouseClick>().Highlight();
+                board[cx - x, cy - y].GetComponent<MouseClick>().Highlight();
+                board[cx + y, cy + x].GetComponent<MouseClick>().Highlight();
+                board[cx - y, cy + x].GetComponent<MouseClick>().Highlight();
+                board[cx + y, cy - x].GetComponent<MouseClick>().Highlight();
+                board[cx - y, cy - x].GetComponent<MouseClick>().Highlight();
+            }
+        }
+        catch(Exception e)
+        {
+
+        }
+        
+    }
+
+  
 }

@@ -17,6 +17,8 @@ abstract public class Unit : MonoBehaviour
 
     public float tolerance = 0.001f;
 
+    bool hasInstruction = false;
+
     //public abstract void OnMouseClick();
 
 
@@ -34,6 +36,8 @@ abstract public class Unit : MonoBehaviour
     {
         //gameObject.BroadcastMessage("Unselect");
         GameObject.Find("Main Camera").GetComponent<BattleManager>().SendMessage("UnitSelected", this);
+
         Select();
     }
+
 }

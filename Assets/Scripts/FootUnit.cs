@@ -7,6 +7,8 @@ public class FootUnit : Unit
 
     //public Vector3 dest;
     bool act;
+    Vector3 velocity = Vector3.zero;
+    
 
     void Update()
     {
@@ -14,7 +16,7 @@ public class FootUnit : Unit
         {
             if (!vEquals(transform.position, dest) )
             {
-                transform.position = Vector3.Lerp(transform.position, dest, moveSpeed * Time.deltaTime);
+                transform.position = Vector3.SmoothDamp(transform.position, dest, ref velocity, .9f);
             } else
             {
                 act = false;

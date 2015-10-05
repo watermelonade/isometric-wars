@@ -52,7 +52,7 @@ public class BattleManager : MonoBehaviour {
             selectedUnit.dest = position + offset;
         }
 
-        dest = position + offset;
+        //dest = position + offset;
         //endTurn = true;
     }
 
@@ -65,7 +65,8 @@ public class BattleManager : MonoBehaviour {
 
         unitSelected = true;
 
-        selectedUnit = unit; 
+        selectedUnit = unit;
+        map.HighlightRadius(unit.moveRange, unit.gameObject.transform.position);
     }
 
     void LoadUnits()

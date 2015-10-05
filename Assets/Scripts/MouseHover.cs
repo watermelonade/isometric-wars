@@ -3,9 +3,6 @@ using System.Collections;
 
 
 //Mouse hover will change text color.
-
-
-
 public class MouseHover : MonoBehaviour {
 
 	// Use this for initialization

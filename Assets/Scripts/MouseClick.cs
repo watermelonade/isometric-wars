@@ -41,4 +41,14 @@ public class MouseClick : MonoBehaviour {
             GameObject.Find("Main Camera").SendMessage("TileClicked", gameObject.transform.position);
 	    
     }
+
+    public void Highlight()
+    {
+        rend.material.color = Color.blue;
+    }
+
+    public void Unhighlight()
+    {
+        rend.material.color = startcolor;
+    }
 }
