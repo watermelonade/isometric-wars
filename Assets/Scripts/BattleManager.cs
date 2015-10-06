@@ -39,6 +39,7 @@ public class BattleManager : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown("space"))
         {
+            map.RemovePlayerRange();
             selectedUnit.Deselect();
             unitSelected = false;
             MoveUnits();
@@ -60,13 +61,15 @@ public class BattleManager : MonoBehaviour {
     {
         if (selectedUnit)
         {
+            map.RemovePlayerRange();
             selectedUnit.Deselect();
         }
 
         unitSelected = true;
 
         selectedUnit = unit;
-        map.HighlightRadius(unit.moveRange, unit.gameObject.transform.position);
+        //map.HighlightRadius(unit.moveRange, unit.gameObject.transform.position);
+        map.ShowPlayerRange(unit.moveRange, unit.transform.position);
     }
 
     void LoadUnits()

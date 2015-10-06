@@ -15,6 +15,8 @@ public class Map : MonoBehaviour {
 
     public const string defaultTile = "X";
 
+    CircleDraw circle;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -70,6 +72,17 @@ public class Map : MonoBehaviour {
 
         Build();  
           
+    }
+
+    public void ShowPlayerRange(float radius, Vector3 pos)
+    {
+        circle = gameObject.AddComponent<CircleDraw>();
+        circle.MakeCircle(radius, pos);
+    }
+
+    public void RemovePlayerRange()
+    {
+        circle.RemoveCircle();
     }
 
     public void HighlightRadius(int radius, Vector3 center)

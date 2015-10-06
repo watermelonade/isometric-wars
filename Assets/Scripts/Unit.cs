@@ -5,7 +5,7 @@ abstract public class Unit : MonoBehaviour
 {
     public int attackDamage = 1;
     public int attackRange = 1;
-    public int moveRange = 3;
+    public int moveRange = 4;
     public Color oColor;
 
     public Vector3 startPos;
