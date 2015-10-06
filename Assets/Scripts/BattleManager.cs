@@ -28,7 +28,7 @@ public class BattleManager : MonoBehaviour {
         //player = GameObject.CreatePrimitive(PrimitiveType.Capsule);//Resources.Load("Prefabs/alien character") as GameObject;
         //player.transform.position = vPlayerStart;
 
-        map = new Map();
+        map = gameObject.AddComponent<Map>();
         map.LoadLevelData("Assets/Resources/LevelData/level1.txt");
 
         units = new List<Unit>();
