@@ -84,7 +84,7 @@ public class Map : MonoBehaviour {
     {
         circle.RemoveCircle();
     }
-
+    /*
     public void HighlightRadius(int radius, Vector3 center)
     {
         int cx = (int)center.x;
@@ -149,5 +149,5 @@ public class Map : MonoBehaviour {
         
     }
 
-  
+  */
 }

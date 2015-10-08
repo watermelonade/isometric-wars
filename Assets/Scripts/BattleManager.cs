@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class BattleManager : MonoBehaviour {
 
     private GameObject player;
+    private GameObject mainCam;
 
     private Vector3 offset = new Vector3(0.0f, 1.5f, 0.0f);
     public Vector3 vPlayerStart;// = new Vector3(1.0f, 2.0f, 1.0f);
@@ -27,7 +28,8 @@ public class BattleManager : MonoBehaviour {
     void Start () {
         //player = GameObject.CreatePrimitive(PrimitiveType.Capsule);//Resources.Load("Prefabs/alien character") as GameObject;
         //player.transform.position = vPlayerStart;
-
+        mainCam = GameObject.Find("Main Camera");
+        
         map = gameObject.AddComponent<Map>();
         map.LoadLevelData("Assets/Resources/LevelData/level1.txt");
 
@@ -39,12 +41,48 @@ public class BattleManager : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown("space"))
         {
+            mainCam.GetComponent<CameraManager>().UnsetTarget();
             map.RemovePlayerRange();
             selectedUnit.Deselect();
             unitSelected = false;
             MoveUnits();
         }
-	}
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            mainCam.GetComponent<CameraManager>().Rotate("left");
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            mainCam.GetComponent<CameraManager>().Rotate("right");
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            mainCam.GetComponent<CameraManager>().Rotate("down");
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                mainCam.GetComponent<CameraManager>().Move("left");
+            }
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                mainCam.GetComponent<CameraManager>().Move("right");
+            }
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                mainCam.GetComponent<CameraManager>().Move("down");
+            }
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                mainCam.GetComponent<CameraManager>().Move("down");
+            }
+        } else
+        {
+
+        }
+    }
 
     void TileClicked(Vector3 position)
     {
@@ -64,6 +102,8 @@ public class BattleManager : MonoBehaviour {
             map.RemovePlayerRange();
             selectedUnit.Deselect();
         }
+
+        mainCam.GetComponent<CameraManager>().SetTarget(unit.transform);
 
         unitSelected = true;
 

@@ -42,7 +42,7 @@ public class CircleDraw : MonoBehaviour
 
         //scale.x = scale.z = radius;
         Color color = circle.GetComponent<Renderer>().material.color;
-        color.a = 0.1f;
+        color.a = 0.01f;
 
         circle.GetComponent<Renderer>().material.color = color;
 
