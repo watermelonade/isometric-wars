@@ -4,7 +4,7 @@ using System.Collections;
 public class CameraManager : MonoBehaviour {
 
     Transform target = null;
-    Vector3 battlePos = new Vector3(-3f, 7f, -3f);
+    Vector3 battlePos = new Vector3(-6f, 14f, -6f);
 
     Vector3 rotateDirection;
 
@@ -23,6 +23,7 @@ public class CameraManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         transform.position = battlePos;
+        gameObject.AddComponent<CameraZoom>();
 	}
 	
 	// Update is called once per frame
