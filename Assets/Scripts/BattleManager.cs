@@ -39,6 +39,15 @@ public class BattleManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        if (unitSelected)
+        {
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                selectedUnit.AdjustHP(-.5f);
+            }
+        }
+
         if (Input.GetKeyDown("space"))
         {
             mainCam.GetComponent<CameraManager>().UnsetTarget();

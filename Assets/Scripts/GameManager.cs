@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour {
     public static bool inBattle = false;
     public static bool inCutScene = false;
     public static bool Paused = false;
-
+    
     LevelManager LM;
 
     CutSceneManager CSM;

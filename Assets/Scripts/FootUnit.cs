@@ -8,7 +8,13 @@ public class FootUnit : Unit
     //public Vector3 dest;
     bool act;
     Vector3 velocity = Vector3.zero;
-    
+    float locHP = 10;
+
+    void Start()
+    {
+        SetMaxHP(locHP);
+        AdjustHP(locHP);
+    }
 
     void Update()
     {
@@ -45,4 +51,5 @@ public class FootUnit : Unit
         return ret;
     }
 
+    
 }
