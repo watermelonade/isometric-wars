@@ -21,14 +21,15 @@ public class MouseClick : MonoBehaviour {
 
     void OnMouseEnter()
     {
-        if(enable) 
-			rend.material.color = Color.green;
+        //if(enable) 
+		//	rend.material.color = Color.green;
+		//GameObject.Find("Main Camera").SendMessage("UpdatePath", gameObject.transform.position);
     }
 
     void OnMouseExit()
     {
-        if(enable) 
-			rend.material.color = startcolor;
+        //if(enable) 
+		//	rend.material.color = startcolor;
     }
 
 	void OnMouseDown(){

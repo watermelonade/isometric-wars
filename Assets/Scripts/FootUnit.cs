@@ -1,14 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 public class FootUnit : Unit
 {
 
     //public Vector3 dest;
     bool act;
-    Vector3 velocity = Vector3.zero;
+    Vector3 velocity = Vector3.one;
     float locHP = 10;
+    float speed = 1f;
+
+    Vector3 startPos;
+
+    public Stack<Vector3> path;// = new Stack<Vector3>();
 
     void Start()
     {
@@ -20,13 +26,23 @@ public class FootUnit : Unit
     {
         if (act)
         {
+            /*float dist = Vector3.Distance(transform.position, dest);
+            for(float i = 0.0f; i < 1.0; i+=(speed * Time.deltaTime) / dist)
+            {
+                transform.position = Vector3.Lerp(transform.position, dest, i);
+                
+            }*/
+
             if (!vEquals(transform.position, dest) )
             {
-                transform.position = Vector3.SmoothDamp(transform.position, dest, ref velocity, .9f);
+                transform.position = Vector3.Lerp(startPos, dest, Time.time);//Vector3.SmoothDamp(transform.position, dest, ref velocity, 1.5f);
+            } else if(path.Count !=0 )
+            {
+                dest = path.Pop();
+                startPos = transform.position;
             } else
             {
                 act = false;
-                
             }
         }
 
@@ -35,7 +51,13 @@ public class FootUnit : Unit
 
     public override void Move()
     {
-        act = true;
+        
+        if (path != null) {
+            act = true;
+            startPos = transform.position;
+            dest = path.Pop();
+        }
+        
     }
 
     private bool vEquals(Vector3 x, Vector3 y)
@@ -51,5 +73,8 @@ public class FootUnit : Unit
         return ret;
     }
 
-    
+    public override void SetPath(Stack<Vector3> p)
+    {
+        path = p;
+    }
 }

@@ -12,7 +12,7 @@ public class HealthBar : MonoBehaviour {
     float offsetX = 30f;
 
     Vector3 unitPos;
-    Vector2 size = new Vector2(30,8);
+    Vector2 size = new Vector2(60,8);
 
     Vector3 screenPos;
 

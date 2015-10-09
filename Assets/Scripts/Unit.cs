@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 abstract public class Unit : MonoBehaviour
 {
@@ -8,7 +9,7 @@ abstract public class Unit : MonoBehaviour
     public float hp;
     public float maxHP;
     
-
+    //public ArrayList<Vector3>;
 
     public int moveRange = 4;
     public Color oColor;
@@ -26,6 +27,7 @@ abstract public class Unit : MonoBehaviour
 
     //public abstract void OnMouseClick();
 
+    public abstract void SetPath(Stack<Vector3> stack);
 
     public void Deselect()
     {

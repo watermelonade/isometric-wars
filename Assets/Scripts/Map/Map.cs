@@ -3,12 +3,32 @@ using System.Collections;
 using System.Text.RegularExpressions;
 using System;
 
+using Priority_Queue;
+using System.Collections.Generic;
+
 public class Map : MonoBehaviour {
 
 	public int width;
 	public int height;
 
+    Unit currentUnit;
+
+	public class Coordinate : PriorityQueueNode
+	{
+		public int X { get; set; }
+		public int Y { get; set; }
+		public Coordinate(int x, int y)
+		{
+			X = x;
+			Y = y;
+		}
+	}
+
 	public GameObject t1;
+
+	private int[,] distanceMap;
+	private Coordinate[,] pathMap;
+
 
 	private GameObject[,] board;
     public string[][] levelBase;
@@ -32,6 +52,8 @@ public class Map : MonoBehaviour {
     void Build()
     {
         board = new GameObject[width, height];
+		distanceMap = new int[width, height];
+		pathMap = new Coordinate[width, height];
 
         for (int x = 0; x < width; x++)
         {
@@ -70,84 +92,127 @@ public class Map : MonoBehaviour {
             levelBase[i] = stringsOfLine;
         }
 
-        Build();  
+        Build(); 
+		//UpdatePathMap();
           
     }
 
-    public void ShowPlayerRange(float radius, Vector3 pos)
+
+
+	public void UpdatePathMap (Unit u)
+	{
+
+        //SortedList<int, int[]> sortedList = new SortedList <int, int[]>(); 
+        //var sortedList = new SortedList();
+        currentUnit = u;
+
+		Vector3 currentPositionVect = u.transform.position;
+		int currentX = (int)currentPositionVect.x;
+		int currentY = (int)currentPositionVect.z;
+
+		for (int x = 0; x < width; x++){
+			for (int y = 0; y < height; y++) { 
+				distanceMap [x, y] = 1000000;
+				pathMap [x, y] = new Coordinate (-1, -1);
+			}
+		}
+
+		distanceMap [currentX, currentY] = 0;
+		//sortedList.Add(0,currentPosition);
+
+		HeapPriorityQueue<Coordinate> priorityQueue = new HeapPriorityQueue<Coordinate>(height*width); //need refine O(height*width)
+		priorityQueue.Enqueue(new Coordinate (currentX, currentY), 0);
+
+		//while (sortedList.Count > 0)
+		while( priorityQueue.Count > 0)
+		{
+			//int[] u = (int[])sortedList.GetByIndex(0);
+			//sortedList.RemoveAt(0);
+
+			Coordinate c = priorityQueue.Dequeue();
+
+			int uDistance = distanceMap[c.X, c.Y] + 1;
+
+			for (int x = c.X - 1; x <= c.X + 1; x++)
+			{
+				for (int y = c.Y - 1; y <= c.Y + 1; y++)
+				{
+					if(x == c.X && y == c.Y)
+						continue;
+					if(x < 0 || x >= width)
+						continue;
+					if(y < 0 || y >= height)
+						continue;
+					
+					if(uDistance < distanceMap[x,y])
+					{
+						distanceMap[x,y] = uDistance;
+						priorityQueue.Enqueue(new Coordinate (x, y), uDistance);
+						pathMap[x,y] = new Coordinate(c.X, c.Y);
+					}
+				}
+			}
+		}
+
+		priorityQueue.Clear();
+
+		/*for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+
+				if(distanceMap[x,y] == 1)
+				{
+					GameObject cube = GameObject.CreatePrimitive (PrimitiveType.Cube);
+					cube.transform.position = new Vector3 ((float)x, 1F, (float)y);
+				}
+			}
+		}*/
+	}
+
+	public void UpdatePath (Vector3 position)
+	{
+		ChangeBack ();
+		//board[1,1].SendMessage("Highlight");
+
+		int currentX = (int)position.x;
+		int currentY = (int)position.z;
+		/*if (currentX >= width || currentX < 0)
+			return;
+		if (currentY >= height || currentY < 0)
+			return;
+		*/	
+		Coordinate current;
+        Stack<Vector3> path = new Stack<Vector3>();
+		while (currentX >= 0 && currentY >= 0) 
+		{
+			board[currentX,currentY].GetComponent<MouseClick>().Highlight();
+            path.Push(board[currentX, currentY].transform.position);
+			current = pathMap[currentX,currentY];
+			currentX = current.X;
+			currentY = current.Y;
+		}
+
+        currentUnit.SetPath(path);
+		
+	}
+
+	void ChangeBack (){
+        for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
+                board[x, y].GetComponent<MouseClick>().Unhighlight() ;		
+		
+	}
+	    
+    public void ShowPlayerRange(float range, Vector3 pos)
     {
+        
         circle = gameObject.AddComponent<CircleDraw>();
-        circle.MakeCircle(radius, pos);
+        
+
+        circle.MakeCircle(range, pos);
     }
 
-    public void RemovePlayerRange()
+	public void RemovePlayerRange()
     {
         circle.RemoveCircle();
     }
-    /*
-    public void HighlightRadius(int radius, Vector3 center)
-    {
-        int cx = (int)center.x;
-        int cy = (int)center.y;
-        int r2 = radius * radius;
-
-        int x = 0;
-        int y = radius;
-        int p = (5 - radius * 4) / 4;
-
-        circleTiles(cx, cy, x, y);
-        while (x < y)
-        {
-            x++;
-            if(p < 0)
-            {
-                p += 2 * x + 1;
-            } else
-            {
-                y--;
-                p += 2 * (x - y) + 1;
-
-            }
-            circleTiles(cx, cy, x, y);
-        }
-    }
-
-    internal void circleTiles(int cx, int cy, int x, int y)
-    {
-        try
-        {
-
-
-            if (x == 0)
-            {
-                board[cx, cy + y].GetComponent<MouseClick>().Highlight();
-                board[cx, cy - y].GetComponent<MouseClick>().Highlight();
-                board[cx + y, cy].GetComponent<MouseClick>().Highlight();
-                board[cx - cy, cy].GetComponent<MouseClick>().Highlight();
-            } else if (x == y)
-            {
-                board[cx + x, cy + y].GetComponent<MouseClick>().Highlight();
-                board[cx - x, cy + y].GetComponent<MouseClick>().Highlight();
-                board[cx + x, cy - y].GetComponent<MouseClick>().Highlight();
-                board[cx - y, cy - y].GetComponent<MouseClick>().Highlight();
-            } else if (x < y)
-            {
-                board[cx + x, cy + y].GetComponent<MouseClick>().Highlight();
-                board[cx - x, cy + y].GetComponent<MouseClick>().Highlight();
-                board[cx + x, cy - y].GetComponent<MouseClick>().Highlight();
-                board[cx - x, cy - y].GetComponent<MouseClick>().Highlight();
-                board[cx + y, cy + x].GetComponent<MouseClick>().Highlight();
-                board[cx - y, cy + x].GetComponent<MouseClick>().Highlight();
-                board[cx + y, cy - x].GetComponent<MouseClick>().Highlight();
-                board[cx - y, cy - x].GetComponent<MouseClick>().Highlight();
-            }
-        }
-        catch(Exception e)
-        {
-
-        }
-        
-    }
-
-  */
 }

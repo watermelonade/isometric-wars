@@ -95,9 +95,18 @@ public class BattleManager : MonoBehaviour {
 
     void TileClicked(Vector3 position)
     {
+
+        /*player.transform.position = position + offset;
+
+		//map.UpdatePath (position);
+		//map.buildcircle ();
+		map.UpdatePathMap ();
+		*/
+
         if (unitSelected)
         {
-            selectedUnit.dest = position + offset;
+            //selectedUnit.dest = position + offset;
+            map.UpdatePath(position);
         }
 
         //dest = position + offset;
@@ -118,6 +127,7 @@ public class BattleManager : MonoBehaviour {
 
         selectedUnit = unit;
         //map.HighlightRadius(unit.moveRange, unit.gameObject.transform.position);
+        map.UpdatePathMap(selectedUnit);
         map.ShowPlayerRange(unit.moveRange, unit.transform.position);
     }
 
@@ -143,4 +153,9 @@ public class BattleManager : MonoBehaviour {
             units[i].Move();
         }
     }
+
+	//void UpdatePath (Vector3 position){
+	//	map.UpdatePath (position);
+	//}
+
 }
