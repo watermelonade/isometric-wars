@@ -131,7 +131,8 @@ public class Map : MonoBehaviour {
 
 			Coordinate c = priorityQueue.Dequeue();
 
-			int uDistance = distanceMap[c.X, c.Y] + 1;
+			int cDistanceInline = distanceMap[c.X, c.Y] + 2;
+			int cDistanceDiagonal = distanceMap[c.X, c.Y] + 3;
 
 			for (int x = c.X - 1; x <= c.X + 1; x++)
 			{
@@ -143,12 +144,23 @@ public class Map : MonoBehaviour {
 						continue;
 					if(y < 0 || y >= height)
 						continue;
-					
-					if(uDistance < distanceMap[x,y])
+					if(c.X == x || c.Y == y)
 					{
-						distanceMap[x,y] = uDistance;
-						priorityQueue.Enqueue(new Coordinate (x, y), uDistance);
-						pathMap[x,y] = new Coordinate(c.X, c.Y);
+						if(cDistanceInline < distanceMap[x,y])
+						{
+							distanceMap[x,y] = cDistanceInline;
+							priorityQueue.Enqueue(new Coordinate (x, y), cDistanceInline);
+							pathMap[x,y] = new Coordinate(c.X, c.Y);
+						}
+					}
+					else
+					{
+						if(cDistanceDiagonal < distanceMap[x,y])
+						{
+							distanceMap[x,y] = cDistanceDiagonal;
+							priorityQueue.Enqueue(new Coordinate (x, y), cDistanceDiagonal);
+							pathMap[x,y] = new Coordinate(c.X, c.Y);
+						}
 					}
 				}
 			}
@@ -182,10 +194,11 @@ public class Map : MonoBehaviour {
 		*/	
 		Coordinate current;
         Stack<Vector3> path = new Stack<Vector3>();
+		Vector3 offset = new Vector3 (0F, 1.5F, 0F);
 		while (currentX >= 0 && currentY >= 0) 
 		{
 			board[currentX,currentY].GetComponent<MouseClick>().Highlight();
-            path.Push(board[currentX, currentY].transform.position);
+            path.Push(board[currentX, currentY].transform.position + offset);
 			current = pathMap[currentX,currentY];
 			currentX = current.X;
 			currentY = current.Y;
