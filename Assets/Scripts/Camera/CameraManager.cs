@@ -4,7 +4,7 @@ using System.Collections;
 public class CameraManager : MonoBehaviour {
 
     Transform target = null;
-    Vector3 battlePos = new Vector3(-6f, 14f, -6f);
+    public static Vector3 battlePos = new Vector3(-6f, 14f, -6f);
 
     Vector3 rotateDirection;
 
@@ -28,6 +28,13 @@ public class CameraManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void LateUpdate () {
+        RaycastHit hit;
+        //Ray ray = new Ray(transform.position, transform.forward);
+
+        if (Physics.Raycast(transform.position, transform.forward, out hit))
+        {
+            target = hit.transform.gameObject.transform;
+        }
 
         if (rotating)
         {
@@ -79,14 +86,14 @@ public class CameraManager : MonoBehaviour {
     public void SetTarget(Transform obj)
     {
         target = obj;
-        transform.position = new Vector3(obj.position.x, transform.position.y, obj.position.z);
+        //transform.position = new Vector3(obj.position.x, transform.position.y, obj.position.z);
 
     }
 
     public void UnsetTarget()
     {
         target = null;
-        transform.position = battlePos;
+        //transform.position = battlePos;
     }
 
     
