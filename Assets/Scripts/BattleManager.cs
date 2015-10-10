@@ -31,7 +31,7 @@ public class BattleManager : MonoBehaviour {
         mainCam = GameObject.Find("Main Camera");
         
         map = gameObject.AddComponent<Map>();
-        map.LoadLevelData("Assets/Resources/LevelData/level1.txt");
+        map.LoadLevelData("Assets/Resources/LevelData/test.txt");
 
         units = new List<Unit>();
         LoadUnits();

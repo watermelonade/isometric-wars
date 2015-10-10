@@ -34,6 +34,7 @@ public class Map : MonoBehaviour {
     public string[][] levelBase;
 
     public const string defaultTile = "X";
+    public const string wallTile = "W";
 
     CircleDraw circle;
 
@@ -59,10 +60,17 @@ public class Map : MonoBehaviour {
         {
             for (int y = 0; y < height; y++)
             {
+                GameObject spawn;
                 switch (levelBase[y][x])
                 {
+                    
+                    case wallTile:
+                        //spawn = Instantiate(Resources.Load("Prefabs/MapTiles/Wall", typeof(GameObject))) as GameObject;
+                        board[x, y] = null;
+                        //spawn.transform.position = new Vector3(x, 0.5F, y);
+                        break;
                     case defaultTile:
-                        GameObject spawn = Instantiate(Resources.Load("Prefabs/MapTiles/map_prefab", typeof(GameObject))) as GameObject;
+                        spawn = Instantiate(Resources.Load("Prefabs/MapTiles/map_prefab", typeof(GameObject))) as GameObject;
                         board[x, y] = spawn;
                         spawn.transform.position = new Vector3(x, 0.5F, y);
                         break;
@@ -144,6 +152,9 @@ public class Map : MonoBehaviour {
 						continue;
 					if(y < 0 || y >= height)
 						continue;
+                    if (board[x, y] == null)
+                        continue;
+
 					if(c.X == x || c.Y == y)
 					{
 						if(cDistanceInline < distanceMap[x,y])
@@ -211,7 +222,8 @@ public class Map : MonoBehaviour {
 	void ChangeBack (){
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
-                board[x, y].GetComponent<MouseClick>().Unhighlight() ;		
+                if(board[x,y] != null)
+                    board[x, y].GetComponent<MouseClick>().Unhighlight() ;		
 		
 	}
 	    
