@@ -11,7 +11,7 @@ public class Map : MonoBehaviour {
 	public int width;
 	public int height;
 
-    Unit currentUnit;
+   // Unit currentUnit;
 
 	public class Coordinate : PriorityQueueNode
 	{
@@ -112,7 +112,7 @@ public class Map : MonoBehaviour {
 
         //SortedList<int, int[]> sortedList = new SortedList <int, int[]>(); 
         //var sortedList = new SortedList();
-        currentUnit = u;
+        //currentUnit = u;
 
 		Vector3 currentPositionVect = u.transform.position;
 		int currentX = (int)currentPositionVect.x;
@@ -191,9 +191,9 @@ public class Map : MonoBehaviour {
 		}*/
 	}
 
-	public void UpdatePath (Vector3 position)
+	public void UpdatePath (Vector3 position, Unit currentUnit)
 	{
-		ChangeBack ();
+		RemovePath ();
 		//board[1,1].SendMessage("Highlight");
 
 		int currentX = (int)position.x;
@@ -219,7 +219,7 @@ public class Map : MonoBehaviour {
 		
 	}
 
-	void ChangeBack (){
+	public void RemovePath (){
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
                 if(board[x,y] != null)

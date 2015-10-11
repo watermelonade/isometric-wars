@@ -74,7 +74,7 @@ abstract public class Unit : MonoBehaviour
     void OnMouseDown()
     {
         //gameObject.BroadcastMessage("Unselect");
-        GameObject.Find("Main Camera").GetComponent<BattleManager>().SendMessage("UnitSelected", this);
+        GameObject.Find("Main Camera").GetComponent<PlayerController>().SendMessage("UnitSelected", this);
 
         Select();
     }
