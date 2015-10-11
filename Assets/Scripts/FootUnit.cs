@@ -10,9 +10,11 @@ public class FootUnit : Unit
     bool act;
     Vector3 velocity = Vector3.one;
     float locHP = 10;
-    float speed = 1f;
+    float speed = .1f;
 
-    Vector3 startPos;
+    float timeStartedMoving;
+    float timeOfMovement = .8f;
+    //Vector3 startPos;
 
     public Stack<Vector3> path;// = new Stack<Vector3>();
 
@@ -33,17 +35,31 @@ public class FootUnit : Unit
                 
             }*/
 
-            if (!vEquals(transform.position, dest) )
+            /*(if (!vEquals(transform.position, dest) )
             {
-                transform.position = Vector3.Lerp(startPos, dest, Time.time);//Vector3.SmoothDamp(transform.position, dest, ref velocity, 1.5f);
-            } else if(path.Count !=0 )
+                transform.position = Vector3.Lerp(startPos, dest, speed*Time.time);//Vector3.SmoothDamp(transform.position, dest, ref velocity, 1.5f);
+            } else */
+
+            float timeSinceStarted = Time.time - timeStartedMoving;
+            float percentageComplete = timeSinceStarted / timeOfMovement;
+
+            transform.position = Vector3.Lerp(startPos, dest, percentageComplete);//Vector3.SmoothDamp(transform.position, dest, ref velocity, 1.5f);
+
+            if (percentageComplete >= 1.0f)
             {
-                dest = path.Pop();
-                startPos = transform.position;
-            } else
-            {
-                path = null;
-                act = false;
+                if (path.Count != 0)
+                {
+                    percentageComplete = 0f;
+                    timeStartedMoving = Time.time;
+                    dest = path.Pop();
+                    startPos = transform.position;
+                }
+                else
+                {
+                    Camera.main.GetComponent<PlayerController>().UnitFinished();
+                    path = null;
+                    act = false;
+                }
             }
         }
 
@@ -54,6 +70,7 @@ public class FootUnit : Unit
         
         if (path != null) {
             act = true;
+            timeStartedMoving = Time.time;
             startPos = transform.position;
             dest = path.Pop();
         }
@@ -76,5 +93,13 @@ public class FootUnit : Unit
     public override void SetPath(Stack<Vector3> p)
     {
         path = p;
+    }
+
+    public void OnMouseDown()
+    {
+        //gameObject.BroadcastMessage("Unselect");
+        GameObject.Find("Main Camera").GetComponent<PlayerController>().SendMessage("UnitSelected", this);
+
+        Select();
     }
 }

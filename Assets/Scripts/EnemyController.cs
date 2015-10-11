@@ -27,6 +27,7 @@ public class EnemyController : MonoBehaviour {
                 units[i].Move();
             }
             turn = false;
+            map.RemovePath();
             BattleManager.FinishTurn();
         }
 	}
@@ -75,5 +76,13 @@ public class EnemyController : MonoBehaviour {
         }
 
         return closest.transform.position;
+    }
+
+    public void OnMouseDown()
+    {
+        //gameObject.BroadcastMessage("Unselect");
+        //GameObject.Find("Main Camera").GetComponent<PlayerController>().SendMessage("UnitSelected", this);
+
+        //Select();
     }
 }

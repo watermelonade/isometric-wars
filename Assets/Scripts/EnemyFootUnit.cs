@@ -10,7 +10,7 @@ public class EnemyFootUnit : Unit {
     Vector3 velocity = Vector3.one;
 
     float locHP = 10;
-    float speed = 1f;
+    float speed = .7f;
 
     Vector3 start;
 

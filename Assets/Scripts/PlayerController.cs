@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour {
     bool turn = false;
     bool unitSelected = false;
 
+    float unitsFinished = 0;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -29,11 +31,18 @@ public class PlayerController : MonoBehaviour {
                 }
             }
 
+            
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 FinishTurn();
-                
+
             }
+
+            if(unitsFinished == units.Count)
+            {
+                BattleManager.FinishTurn();
+            }
+            
         }
 	}
 
@@ -53,6 +62,11 @@ public class PlayerController : MonoBehaviour {
         {
             units[i].Move();
         }
+    }
+
+    public void UnitFinished()
+    {
+        unitsFinished++;
     }
 
     void TileClicked(Vector3 position)
@@ -107,8 +121,11 @@ public class PlayerController : MonoBehaviour {
     void FinishTurn()
     {
         turn = false;
+        unitSelected = false;
         map.RemovePath();
         MoveUnits();
-        BattleManager.FinishTurn();
+        //BattleManager.FinishTurn();
     }
+
+
 }
