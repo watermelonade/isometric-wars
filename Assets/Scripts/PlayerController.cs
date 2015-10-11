@@ -45,7 +45,10 @@ public class PlayerController : MonoBehaviour {
     public void MoveUnits()
     {
         map.RemovePlayerRange();
-        selectedUnit.Deselect();
+        if (selectedUnit)
+        {
+            selectedUnit.Deselect();
+        }
         for (int i = 0; i < units.Count; i++)
         {
             units[i].Move();
@@ -65,7 +68,7 @@ public class PlayerController : MonoBehaviour {
         if (unitSelected)
         {
             //selectedUnit.dest = position + offset;
-            map.UpdatePath(position, selectedUnit);
+            map.UpdateUnitPath(position, selectedUnit);
         }
 
         //dest = position + offset;
@@ -105,6 +108,7 @@ public class PlayerController : MonoBehaviour {
     {
         turn = false;
         map.RemovePath();
+        MoveUnits();
         BattleManager.FinishTurn();
     }
 }

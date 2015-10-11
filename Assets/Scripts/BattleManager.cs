@@ -8,9 +8,15 @@ public class BattleManager : MonoBehaviour {
     private GameObject mainCam;
 
     private Vector3 offset = new Vector3(0.0f, 1.5f, 0.0f);
+
     public Vector3 vPlayerStart;
     public Vector3 vPlayerStart2;
     public Vector3 vPlayerStart3;
+
+    public Vector3 ePlayerStart;
+    public Vector3 ePlayerStart2;
+    public Vector3 ePlayerStart3;
+
 
     Map map;
 
@@ -20,7 +26,7 @@ public class BattleManager : MonoBehaviour {
     public float moveSpeed = 2.0f;
 
     List<Unit> units;
-    //List<Unit> enemyUnits;
+    List<Unit> enemyUnits;
 
     //Unit selectedUnit;
 
@@ -28,47 +34,41 @@ public class BattleManager : MonoBehaviour {
     public static bool playerTurn = false;
     public static bool enemyTurn = false;
 
-    PlayerController pc;
+    public static PlayerController pc;
+    public static EnemyController ec;
 
     // Use this for initialization
     void Start () {
-        //player = GameObject.CreatePrimitive(PrimitiveType.Capsule);//Resources.Load("Prefabs/alien character") as GameObject;
-        //player.transform.position = vPlayerStart;
+        
         mainCam = GameObject.Find("Main Camera");
         
         map = gameObject.AddComponent<Map>();
         map.LoadLevelData("Assets/Resources/LevelData/test.txt");
 
         units = new List<Unit>();
+        enemyUnits = new List<Unit>();
         LoadUnits();
+
+        ec = gameObject.AddComponent<EnemyController>();
+        ec.SetUnits(enemyUnits);
+        ec.SetMap(map);
 
         pc = gameObject.AddComponent<PlayerController>();
         pc.SetUnits(units);
         pc.SetMap(map);
 
         pc.ActivateTurn();
-        
+        playerTurn = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        /*if (unitSelected)
-        {
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                selectedUnit.AdjustHP(-.5f);
-            }
-        }*/
-
-        if (Input.GetKeyDown("space") && playerTurn)
-        {
-            mainCam.GetComponent<CameraManager>().UnsetTarget();
-            //map.RemovePlayerRange();
-            //selectedUnit.Deselect();
-            //unitSelected = false;
-            pc.MoveUnits();
-        }
+        //if (Input.GetKeyDown("space") && playerTurn)
+        //{
+        //    //mainCam.GetComponent<CameraManager>().UnsetTarget();
+        //    //pc.MoveUnits();
+        //}
 
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -130,24 +130,7 @@ public class BattleManager : MonoBehaviour {
         //endTurn = true;
     }*/
 
-    /*public void UnitSelected(Unit unit)
-    {
-
-        if (selectedUnit)
-        {
-            map.RemovePlayerRange();
-            selectedUnit.Deselect();
-        }
-
-        //mainCam.GetComponent<CameraManager>().SetTarget(unit.transform);
-
-        unitSelected = true;
-
-        selectedUnit = unit;
-        //map.HighlightRadius(unit.moveRange, unit.gameObject.transform.position);
-        map.UpdatePathMap(selectedUnit);
-        map.ShowPlayerRange(unit.moveRange, unit.transform.position);
-    }*/
+    
 
     void LoadUnits()
     {
@@ -155,30 +138,27 @@ public class BattleManager : MonoBehaviour {
         Unit u2 = Instantiate(Resources.Load("Prefabs/Units/FootUnit", typeof(Unit))) as Unit;
         Unit u3 = Instantiate(Resources.Load("Prefabs/Units/FootUnit", typeof(Unit))) as Unit;
 
-        /*Unit e1 = Instantiate(Resources.Load("Prefabs/Units/FootUnit", typeof(Unit))) as Unit;
-        Unit e2 = Instantiate(Resources.Load("Prefabs/Units/FootUnit", typeof(Unit))) as Unit;
-        Unit e3 = Instantiate(Resources.Load("Prefabs/Units/FootUnit", typeof(Unit))) as Unit;*/
+        Unit e1 = Instantiate(Resources.Load("Prefabs/Units/EnemyUnit", typeof(Unit))) as Unit;
+        Unit e2 = Instantiate(Resources.Load("Prefabs/Units/EnemyUnit", typeof(Unit))) as Unit;
+        Unit e3 = Instantiate(Resources.Load("Prefabs/Units/EnemyUnit", typeof(Unit))) as Unit;
 
         u1.transform.position = vPlayerStart;
         u2.transform.position = vPlayerStart2;
         u3.transform.position = vPlayerStart3;
 
+        e1.transform.position = ePlayerStart;
+        e2.transform.position = ePlayerStart2;
+        e3.transform.position = ePlayerStart3;
+
         units.Add(u1);
         units.Add(u2);
         units.Add(u3);
+
+        enemyUnits.Add(e1);
+        enemyUnits.Add(e2);
+        enemyUnits.Add(e3);
     }
 
-    /*void MoveUnits()
-    {
-        for(int i = 0; i < units.Count; i++)
-        {
-            units[i].Move();
-        }
-    }*/
-
-	//void UpdatePath (Vector3 position){
-	//	map.UpdatePath (position);
-	//}
 
     public static void FinishTurn()
     {
@@ -186,11 +166,13 @@ public class BattleManager : MonoBehaviour {
         {
             playerTurn = false;
             enemyTurn = true;
+            ec.ActivateTurn();
         }
-        else
+        else if(enemyTurn)
         {
             playerTurn = true;
             enemyTurn = false;
+            pc.ActivateTurn();
         }
         
     }

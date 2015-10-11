@@ -191,7 +191,7 @@ public class Map : MonoBehaviour {
 		}*/
 	}
 
-	public void UpdatePath (Vector3 position, Unit currentUnit)
+	public void UpdateUnitPath (Vector3 position, Unit currentUnit)
 	{
 		RemovePath ();
 		//board[1,1].SendMessage("Highlight");
@@ -238,6 +238,9 @@ public class Map : MonoBehaviour {
 
 	public void RemovePlayerRange()
     {
-        circle.RemoveCircle();
+        if (circle)
+        {
+            circle.RemoveCircle();
+        }
     }
 }

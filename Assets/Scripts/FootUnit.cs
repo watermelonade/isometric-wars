@@ -42,12 +42,12 @@ public class FootUnit : Unit
                 startPos = transform.position;
             } else
             {
+                path = null;
                 act = false;
             }
         }
 
     }
-
 
     public override void Move()
     {
