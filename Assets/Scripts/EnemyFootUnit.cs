@@ -5,14 +5,16 @@ using System.Collections.Generic;
 
 public class EnemyFootUnit : Unit {
 
-    float range = 3f;
-    float tilesMoved = 0;
+    int range = 3;
+    int tilesMoved = 0;
     Vector3 velocity = Vector3.one;
 
     float locHP = 10;
     float speed = .7f;
+    float timeStartedMoving;
+    float timeOfMovement = .8f;
 
-    Vector3 start;
+    //Vector3 startPos;
 
     bool act;
 
@@ -34,28 +36,30 @@ public class EnemyFootUnit : Unit {
 	void Update () {
         if (act)
         {
-            if (tilesMoved < range)
+            float timeSinceStarted = Time.time - timeStartedMoving;
+            float percentageComplete = timeSinceStarted / timeOfMovement;
+
+            transform.position = Vector3.Lerp(startPos, dest, percentageComplete);//Vector3.SmoothDamp(transform.position, dest, ref velocity, 1.5f);
+
+            if (percentageComplete >= 1.0f)
             {
-                if (!vEquals(transform.position, dest))
+                if(tilesMoved == range || path.Count == 0)
                 {
-                    transform.position = Vector3.Lerp(startPos, dest, Time.time);//Vector3.SmoothDamp(transform.position, dest, ref velocity, 1.5f);
+                    path = null;
+                    tilesMoved = 0;
+                    act = false;
+                    Camera.main.GetComponent<EnemyController>().UnitFinished();
+                    tilesMoved = 0;
                 }
-                else if (path.Count != 0)
+                else
                 {
+                    percentageComplete = 0f;
+                    timeStartedMoving = Time.time;
                     tilesMoved++;
                     dest = path.Pop();
                     startPos = transform.position;
                 }
-                else
-                {
-                    act = false;
-                    tilesMoved = 0;
-                }
-            } else
-            {
-                path = null;
-                act = false;
-                tilesMoved = 0;
+                
             }
         }
 	}
@@ -78,7 +82,8 @@ public class EnemyFootUnit : Unit {
         if(path != null)
         {
             act = true;
-            start = transform.position;
+            timeStartedMoving = Time.time;
+            startPos = transform.position;
             dest = path.Pop();
         }
     }

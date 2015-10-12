@@ -191,7 +191,7 @@ public class Map : MonoBehaviour {
 		}*/
 	}
 
-	public void UpdateUnitPath (Vector3 position, Unit currentUnit)
+	public void UpdateUnitPath (Vector3 position, Unit currentUnit, bool showPath)
 	{
 		RemovePath ();
 		//board[1,1].SendMessage("Highlight");
@@ -208,11 +208,14 @@ public class Map : MonoBehaviour {
 		Vector3 offset = new Vector3 (0F, 1.5F, 0F);
 		while (currentX >= 0 && currentY >= 0) 
 		{
-			board[currentX,currentY].GetComponent<MouseClick>().Highlight();
+            if(showPath)
+                board[currentX, currentY].GetComponent<MouseClick>().Highlight();
+
             path.Push(board[currentX, currentY].transform.position + offset);
-			current = pathMap[currentX,currentY];
-			currentX = current.X;
-			currentY = current.Y;
+            current = pathMap[currentX, currentY];
+            currentX = current.X;
+            currentY = current.Y;
+            
 		}
 
         currentUnit.SetPath(path);

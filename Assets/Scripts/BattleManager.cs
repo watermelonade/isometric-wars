@@ -139,24 +139,24 @@ public class BattleManager : MonoBehaviour {
         Unit u3 = Instantiate(Resources.Load("Prefabs/Units/FootUnit", typeof(Unit))) as Unit;
 
         Unit e1 = Instantiate(Resources.Load("Prefabs/Units/EnemyUnit", typeof(Unit))) as Unit;
-        Unit e2 = Instantiate(Resources.Load("Prefabs/Units/EnemyUnit", typeof(Unit))) as Unit;
-        Unit e3 = Instantiate(Resources.Load("Prefabs/Units/EnemyUnit", typeof(Unit))) as Unit;
+        //Unit e2 = Instantiate(Resources.Load("Prefabs/Units/EnemyUnit", typeof(Unit))) as Unit;
+        //Unit e3 = Instantiate(Resources.Load("Prefabs/Units/EnemyUnit", typeof(Unit))) as Unit;
 
         u1.transform.position = vPlayerStart;
         u2.transform.position = vPlayerStart2;
         u3.transform.position = vPlayerStart3;
 
         e1.transform.position = ePlayerStart;
-        e2.transform.position = ePlayerStart2;
-        e3.transform.position = ePlayerStart3;
+        //e2.transform.position = ePlayerStart2;
+        //e3.transform.position = ePlayerStart3;
 
         units.Add(u1);
         units.Add(u2);
         units.Add(u3);
 
         enemyUnits.Add(e1);
-        enemyUnits.Add(e2);
-        enemyUnits.Add(e3);
+        //enemyUnits.Add(e2);
+        //enemyUnits.Add(e3);
     }
 
 
@@ -168,7 +168,7 @@ public class BattleManager : MonoBehaviour {
             enemyTurn = true;
             ec.ActivateTurn();
         }
-        else if(enemyTurn)
+        else 
         {
             playerTurn = true;
             enemyTurn = false;

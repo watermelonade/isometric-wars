@@ -9,7 +9,8 @@ public class EnemyController : MonoBehaviour {
     Map map;
 
     bool turn;
-    
+    bool moved = false;
+    float unitsFinished = 0f;
 
 	// Use this for initialization
 	void Start () {
@@ -20,15 +21,29 @@ public class EnemyController : MonoBehaviour {
 	void Update () {
         if (turn)
         {
-            for(int i = 0; i < units.Count; i++)
+            if (moved == false)
             {
-                map.UpdatePathMap(units[i]);
-                map.UpdateUnitPath(GetClosestPlayerUnitPos(units[i]), units[i]);
-                units[i].Move();
+                for (int i = 0; i < units.Count; i++)
+                {
+                    map.UpdatePathMap(units[i]);
+                    Vector3 closestPlayerPos = GetClosestPlayerUnitPos(units[i]);
+                   
+                    map.UpdateUnitPath(closestPlayerPos, units[i], false);
+                    units[i].Move();
+                }
+                moved = true;
             }
-            turn = false;
-            map.RemovePath();
-            BattleManager.FinishTurn();
+
+            if(unitsFinished == units.Count)
+            {
+                turn = false;
+                unitsFinished = 0f;
+                moved = false;
+                map.RemovePath();
+                BattleManager.FinishTurn();
+            }
+
+            
         }
 	}
 
@@ -76,6 +91,11 @@ public class EnemyController : MonoBehaviour {
         }
 
         return closest.transform.position;
+    }
+
+    public void UnitFinished()
+    {
+        unitsFinished++;
     }
 
     public void OnMouseDown()

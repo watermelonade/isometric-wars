@@ -28,17 +28,7 @@ public class FootUnit : Unit
     {
         if (act)
         {
-            /*float dist = Vector3.Distance(transform.position, dest);
-            for(float i = 0.0f; i < 1.0; i+=(speed * Time.deltaTime) / dist)
-            {
-                transform.position = Vector3.Lerp(transform.position, dest, i);
-                
-            }*/
-
-            /*(if (!vEquals(transform.position, dest) )
-            {
-                transform.position = Vector3.Lerp(startPos, dest, speed*Time.time);//Vector3.SmoothDamp(transform.position, dest, ref velocity, 1.5f);
-            } else */
+            
 
             float timeSinceStarted = Time.time - timeStartedMoving;
             float percentageComplete = timeSinceStarted / timeOfMovement;
@@ -67,14 +57,15 @@ public class FootUnit : Unit
 
     public override void Move()
     {
-        
         if (path != null) {
             act = true;
             timeStartedMoving = Time.time;
             startPos = transform.position;
             dest = path.Pop();
+        } else
+        {
+            Camera.main.GetComponent<PlayerController>().UnitFinished();
         }
-        
     }
 
     private bool vEquals(Vector3 x, Vector3 y)
@@ -88,6 +79,7 @@ public class FootUnit : Unit
             ret = false;
 
         return ret;
+
     }
 
     public override void SetPath(Stack<Vector3> p)

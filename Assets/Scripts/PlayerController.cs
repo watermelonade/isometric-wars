@@ -40,6 +40,8 @@ public class PlayerController : MonoBehaviour {
 
             if(unitsFinished == units.Count)
             {
+                turn = false;
+                unitsFinished = 0;
                 BattleManager.FinishTurn();
             }
             
@@ -82,7 +84,7 @@ public class PlayerController : MonoBehaviour {
         if (unitSelected)
         {
             //selectedUnit.dest = position + offset;
-            map.UpdateUnitPath(position, selectedUnit);
+            map.UpdateUnitPath(position, selectedUnit, true);
         }
 
         //dest = position + offset;
@@ -120,7 +122,7 @@ public class PlayerController : MonoBehaviour {
 
     void FinishTurn()
     {
-        turn = false;
+        //turn = false;
         unitSelected = false;
         map.RemovePath();
         MoveUnits();
