@@ -14,16 +14,27 @@ public class PlayerController : MonoBehaviour {
 
     float unitsFinished = 0;
 
+    public PlayerState state;
+
+    public enum PlayerState
+    {
+        ChooseUnit,
+        UnitSelected,
+        UnitMoving,
+        UnitChoiceMenu,
+        Finish
+    }
+
 	// Use this for initialization
 	void Start () {
-	
+        state = PlayerState.ChooseUnit;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	    if(turn == true)
         {
-            if (unitSelected)
+            if (state == PlayerState.UnitSelected)
             {
                 if (Input.GetKeyDown(KeyCode.Q))
                 {
@@ -31,17 +42,13 @@ public class PlayerController : MonoBehaviour {
                 }
             }
 
-            
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                FinishTurn();
-
-            }
-
             if(unitsFinished == units.Count)
             {
+                unitSelected = false;
+                map.RemovePath();
                 turn = false;
                 unitsFinished = 0;
+                state = PlayerState.Finish;
                 BattleManager.FinishTurn();
             }
             
@@ -69,50 +76,55 @@ public class PlayerController : MonoBehaviour {
     public void UnitFinished()
     {
         unitsFinished++;
+        state = PlayerState.ChooseUnit;
     }
 
     void TileClicked(Vector3 position)
     {
 
-        /*player.transform.position = position + offset;
-
-		//map.UpdatePath (position);
-		//map.buildcircle ();
-		map.UpdatePathMap ();
-		*/
-
         if (unitSelected)
         {
-            //selectedUnit.dest = position + offset;
-            map.UpdateUnitPath(position, selectedUnit, true);
+            if (state == PlayerState.UnitSelected)
+            {
+                //selectedUnit.dest = position + offset;
+                map.UpdateUnitPath(position, selectedUnit, true);
+                map.RemovePlayerRange();
+                selectedUnit.Move();
+            }
         }
+    }
 
-        //dest = position + offset;
-        //endTurn = true;
+    public void UnitChoosing()
+    {
+        state = PlayerController.PlayerState.UnitChoiceMenu;
+        map.RemovePath();
     }
 
     public void UnitSelected(Unit unit)
     {
-
-        if (selectedUnit)
+        if (state == PlayerState.ChooseUnit)
         {
-            map.RemovePlayerRange();
-            selectedUnit.Deselect();
+            if (selectedUnit)
+            {
+                map.RemovePlayerRange();
+                selectedUnit.Deselect();
+            }
+
+            state = PlayerState.UnitSelected;
+
+            unitSelected = true;
+
+            selectedUnit = unit;
+
+            map.UpdatePathMap(selectedUnit);
+            map.ShowPlayerRange(unit.moveRange, unit.transform.position);
         }
-
-        //mainCam.GetComponent<CameraManager>().SetTarget(unit.transform);
-
-        unitSelected = true;
-
-        selectedUnit = unit;
-        //map.HighlightRadius(unit.moveRange, unit.gameObject.transform.position);
-        map.UpdatePathMap(selectedUnit);
-        map.ShowPlayerRange(unit.moveRange, unit.transform.position);
     }
 
     public void ActivateTurn()
     {
         turn = true;
+        state = PlayerState.ChooseUnit;
     }
 
     public void SetMap(Map passedMap)

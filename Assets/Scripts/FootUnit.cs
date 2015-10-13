@@ -6,6 +6,8 @@ using System.Collections.Generic;
 public class FootUnit : Unit
 {
 
+    int ap = 12;
+
     //public Vector3 dest;
     bool act;
     Vector3 velocity = Vector3.one;
@@ -13,8 +15,12 @@ public class FootUnit : Unit
     float speed = .1f;
 
     float timeStartedMoving;
-    float timeOfMovement = .8f;
+    float timeOfMovement = .2f;
     //Vector3 startPos;
+
+    bool choosing = false;
+    bool moving = false;
+    public bool hasMoved = false;
 
     public Stack<Vector3> path;// = new Stack<Vector3>();
 
@@ -28,37 +34,56 @@ public class FootUnit : Unit
     {
         if (act)
         {
-            
 
-            float timeSinceStarted = Time.time - timeStartedMoving;
-            float percentageComplete = timeSinceStarted / timeOfMovement;
-
-            transform.position = Vector3.Lerp(startPos, dest, percentageComplete);//Vector3.SmoothDamp(transform.position, dest, ref velocity, 1.5f);
-
-            if (percentageComplete >= 1.0f)
+            if (moving)
             {
-                if (path.Count != 0)
+                float timeSinceStarted = Time.time - timeStartedMoving;
+                float percentageComplete = timeSinceStarted / timeOfMovement;
+
+                transform.position = Vector3.Lerp(startPos, dest, percentageComplete);//Vector3.SmoothDamp(transform.position, dest, ref velocity, 1.5f);
+
+                if (percentageComplete >= 1.0f)
                 {
-                    percentageComplete = 0f;
-                    timeStartedMoving = Time.time;
-                    dest = path.Pop();
-                    startPos = transform.position;
-                }
-                else
-                {
-                    Camera.main.GetComponent<PlayerController>().UnitFinished();
-                    path = null;
-                    act = false;
+                    if (path.Count != 0)
+                    {
+                        percentageComplete = 0f;
+                        timeStartedMoving = Time.time;
+                        dest = path.Pop();
+                        startPos = transform.position;
+                    }
+                    else
+                    {
+                        moving = false;
+                        hasMoved = true;
+                        Camera.main.GetComponent<PlayerController>().UnitChoosing();
+
+                        gameObject.AddComponent<ChoiceMenu>();
+                    }
                 }
             }
+
+            
+
         }
 
+    }
+
+    public void Finish()
+    {
+        path = null;
+        act = false;
+        hasMoved = false;
+        
+        Destroy(gameObject.GetComponent<ChoiceMenu>());
+        Camera.main.GetComponent<PlayerController>().UnitFinished();
     }
 
     public override void Move()
     {
         if (path != null) {
+            Camera.main.GetComponent<PlayerController>().state = PlayerController.PlayerState.UnitMoving;
             act = true;
+            moving = true;
             timeStartedMoving = Time.time;
             startPos = transform.position;
             dest = path.Pop();
