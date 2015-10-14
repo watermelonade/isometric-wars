@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class LevelManager : MonoBehaviour
+public class StageManager : MonoBehaviour
 {
-    public FullLevel CurrentLevel;
-    public List<FullLevel> LevelList = new List<FullLevel>();
+    public FullStage CurrentStage;
+    public List<FullStage> StageList = new List<FullStage>();
     void Start()
     {
         DontDestroyOnLoad(this);
@@ -13,7 +13,7 @@ public class LevelManager : MonoBehaviour
 
 
 [System.Serializable]
-public class FullLevel
+public class FullStage
 {
     //public MapType type;
     //public CutScene cut;
