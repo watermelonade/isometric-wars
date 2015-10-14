@@ -36,7 +36,7 @@ public class EnemyFootUnit : Unit {
 	
 	// Update is called once per frame
 	void Update () {
-        if (state == UnitState.moving)
+        if (state == UnitState.Moving)
         {
             float timeSinceStarted = Time.time - timeStartedMoving;
             float percentageComplete = timeSinceStarted / timeOfMovement;
@@ -49,7 +49,7 @@ public class EnemyFootUnit : Unit {
                 {
                     path = null;
                     tilesMoved = 0;
-					state = UnitState.idle;
+					state = UnitState.Idle;
                     Camera.main.GetComponent<EnemyController>().UnitFinished();
                     tilesMoved = 0;
                 }
@@ -83,7 +83,7 @@ public class EnemyFootUnit : Unit {
     {
         if(path != null)
         {
-            state = UnitState.moving;
+            state = UnitState.Moving;
             timeStartedMoving = Time.time;
             startPos = transform.position;
             dest = path.Pop();

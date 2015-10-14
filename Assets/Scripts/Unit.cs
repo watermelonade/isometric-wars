@@ -41,7 +41,7 @@ abstract public class Unit : MonoBehaviour
 
     }
 
-	UnitState state;
+	protected UnitState state;
 
     public abstract void SetPath(Stack<Vector3> stack);
     public abstract void Finish();
