@@ -14,6 +14,8 @@ public class EnemyFootUnit : Unit {
     float timeStartedMoving;
     float timeOfMovement = .8f;
 
+    public string name = "enemy";
+
     //Vector3 startPos;
 
 	//used in old bool implementation, now using state enum
@@ -29,7 +31,7 @@ public class EnemyFootUnit : Unit {
 
     // Use this for initialization
     void Start () {
-
+        gameObject.name = name;
         SetMaxHP(locHP);
         AdjustHP(locHP);
 	}

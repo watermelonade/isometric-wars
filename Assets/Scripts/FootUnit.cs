@@ -8,6 +8,8 @@ public class FootUnit : Unit
 
     int ap = 12;
 
+    
+
     //public Vector3 dest;
     bool act;
     Vector3 velocity = Vector3.one;
@@ -28,8 +30,10 @@ public class FootUnit : Unit
 
     void Start()
     {
+        gameObject.GetComponent<SphereCollider>().radius = 0;
         SetMaxHP(locHP);
         AdjustHP(locHP);
+        SetAttackRange(3);
     }
 
     void Update()
@@ -58,13 +62,11 @@ public class FootUnit : Unit
                         moving = false;
                         hasMoved = true;
                         Camera.main.GetComponent<PlayerController>().UnitChoosing();
-
+                        gameObject.GetComponent<SphereCollider>().radius = attackRange;
                         gameObject.AddComponent<ChoiceMenu>();
                     }
                 }
             }
-
-            
 
         }
 
@@ -75,7 +77,7 @@ public class FootUnit : Unit
         path = null;
         act = false;
         hasMoved = false;
-        
+        gameObject.GetComponent<SphereCollider>().radius = 0;
         Destroy(gameObject.GetComponent<ChoiceMenu>());
         Camera.main.GetComponent<PlayerController>().UnitFinished();
     }
@@ -116,25 +118,33 @@ public class FootUnit : Unit
 
     public void OnMouseDown()
     {
-        //gameObject.BroadcastMessage("Unselect");
         GameObject.Find("Main Camera").GetComponent<PlayerController>().SendMessage("UnitSelected", this);
 
         Select();
     }
 
-    void OnCollisionStay(Collision col)
+    void OnTriggerEnter(Collider col)
     {
         if(hasMoved == true && !target)
         {
-            target = col.gameObject.GetComponent<Unit>();
+            if (col.gameObject.name == "enemy")
+            {
+                target = col.gameObject.GetComponent<Unit>();
+            }
         }
+    }
+
+    void OnTriggerExit(Collider col)
+    {
+        if(col.gameObject.name == "enemy")
+            target = null;
     }
 
     internal override void Attack()
     {
         if (target)
         {
-            target.AdjustHP(attackDamage);
+            target.AdjustHP(-attackDamage);
         }
     }
 }

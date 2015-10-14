@@ -7,6 +7,7 @@ abstract public class Unit : MonoBehaviour
 {
     public int attackDamage = 1;
     public int attackRange = 1;
+
     public float hp;
     public float maxHP;
     
@@ -64,6 +65,16 @@ abstract public class Unit : MonoBehaviour
     public float GetMaxHP()
     {
         return maxHP;
+    }
+
+    public void SetAttackRange(int a)
+    {
+        attackRange = a;
+    }
+
+    public int GetAttackRange()
+    {
+        return attackRange;
     }
 
     public void SetMaxHP(float max)
