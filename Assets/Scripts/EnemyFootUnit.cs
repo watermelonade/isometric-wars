@@ -16,7 +16,9 @@ public class EnemyFootUnit : Unit {
 
     //Vector3 startPos;
 
-    bool act;
+	//used in old bool implementation, now using state enum
+    //bool act;
+	
 
     public Stack<Vector3> path;
 
@@ -34,7 +36,7 @@ public class EnemyFootUnit : Unit {
 	
 	// Update is called once per frame
 	void Update () {
-        if (act)
+        if (state == UnitState.moving)
         {
             float timeSinceStarted = Time.time - timeStartedMoving;
             float percentageComplete = timeSinceStarted / timeOfMovement;
@@ -47,7 +49,7 @@ public class EnemyFootUnit : Unit {
                 {
                     path = null;
                     tilesMoved = 0;
-                    act = false;
+					state = UnitState.idle;
                     Camera.main.GetComponent<EnemyController>().UnitFinished();
                     tilesMoved = 0;
                 }
@@ -81,7 +83,7 @@ public class EnemyFootUnit : Unit {
     {
         if(path != null)
         {
-            act = true;
+            state = UnitState.moving;
             timeStartedMoving = Time.time;
             startPos = transform.position;
             dest = path.Pop();

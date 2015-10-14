@@ -30,16 +30,18 @@ abstract public class Unit : MonoBehaviour
 
     //public abstract void OnMouseClick();
 
-    UnitState state;
-
-    private enum UnitState
+	//Enumerator for possible unit states
+    protected enum UnitState
     {
+		//Idle state used for choosing units, unit is not interacted with
+		Idle,
         Selected,
         Moving,
-        Choosing,
         Attacking
-        
+
     }
+
+	UnitState state;
 
     public abstract void SetPath(Stack<Vector3> stack);
     public abstract void Finish();

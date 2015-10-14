@@ -84,7 +84,7 @@ public class Map : MonoBehaviour {
     {
         
         string text = System.IO.File.ReadAllText(file);
-        string[] lines = Regex.Split(text, "\r\n");
+        string[] lines = Regex.Split(text, "\n");
         height = lines.Length;
 
         levelBase = new string[height][];
