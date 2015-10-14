@@ -24,6 +24,8 @@ public class FootUnit : Unit
 
     public Stack<Vector3> path;// = new Stack<Vector3>();
 
+    private Unit target;
+
     void Start()
     {
         SetMaxHP(locHP);
@@ -68,7 +70,7 @@ public class FootUnit : Unit
 
     }
 
-    public void Finish()
+    public override void Finish()
     {
         path = null;
         act = false;
@@ -118,5 +120,21 @@ public class FootUnit : Unit
         GameObject.Find("Main Camera").GetComponent<PlayerController>().SendMessage("UnitSelected", this);
 
         Select();
+    }
+
+    void OnCollisionStay(Collision col)
+    {
+        if(hasMoved == true && !target)
+        {
+            target = col.gameObject.GetComponent<Unit>();
+        }
+    }
+
+    internal override void Attack()
+    {
+        if (target)
+        {
+            target.AdjustHP(attackDamage);
+        }
     }
 }

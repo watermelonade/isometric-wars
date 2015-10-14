@@ -19,7 +19,7 @@ public class ChoiceMenu : MonoBehaviour {
 
             if(GUI.Button(new Rect(0, 0,buttonSize.x,buttonSize.y), "Attack"))
             {
-
+                gameObject.GetComponent<Unit>().Attack();
             }
 
             if (GUI.Button(new Rect(0, buttonSize.y*1, buttonSize.x, buttonSize.y), "Items"))
@@ -29,7 +29,7 @@ public class ChoiceMenu : MonoBehaviour {
 
             if (GUI.Button(new Rect(0, buttonSize.y*2, buttonSize.x, buttonSize.y), "Wait"))
             {
-                gameObject.GetComponent<FootUnit>().Finish();
+                gameObject.GetComponent<Unit>().Finish();
             }
 
         GUI.EndGroup();

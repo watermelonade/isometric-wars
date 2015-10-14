@@ -26,10 +26,10 @@ public class HealthBar : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        health = gameObject.GetComponent<FootUnit>().GetHP();
+        health = gameObject.GetComponent<Unit>().GetHP();
         recentHealth = health;
 
-        maxHealth = gameObject.GetComponent<FootUnit>().GetMaxHP();
+        maxHealth = gameObject.GetComponent<Unit>().GetMaxHP();
 
         unitPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
        
@@ -77,7 +77,7 @@ public class HealthBar : MonoBehaviour {
 
         screenPos = Camera.main.WorldToScreenPoint(unitPos);
        
-        health = gameObject.GetComponent<FootUnit>().GetHP();
+        health = gameObject.GetComponent<Unit>().GetHP();
 
         if(health != recentHealth)
         {

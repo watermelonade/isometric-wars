@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour {
         {
             if (state == PlayerState.UnitSelected)
             {
-                //selectedUnit.dest = position + offset;
+                
                 map.UpdateUnitPath(position, selectedUnit, true);
                 map.RemovePlayerRange();
                 selectedUnit.Move();

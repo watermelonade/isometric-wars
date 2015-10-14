@@ -87,4 +87,14 @@ public class EnemyFootUnit : Unit {
             dest = path.Pop();
         }
     }
+
+    public override void Finish()
+    {
+        throw new NotImplementedException();
+    }
+
+    internal override void Attack()
+    {
+        throw new NotImplementedException();
+    }
 }

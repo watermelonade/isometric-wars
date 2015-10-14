@@ -26,9 +26,23 @@ abstract public class Unit : MonoBehaviour
 
     bool hasInstruction = false;
 
+    internal abstract void Attack();
+
     //public abstract void OnMouseClick();
 
+    UnitState state;
+
+    private enum UnitState
+    {
+        Selected,
+        Moving,
+        Choosing,
+        Attacking
+        
+    }
+
     public abstract void SetPath(Stack<Vector3> stack);
+    public abstract void Finish();
 
     public void Deselect()
     {
