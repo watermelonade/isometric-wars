@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class EnemyFootUnit : Unit {
 
     int range = 3;
+    int aRange = 3;
     int tilesMoved = 0;
     Vector3 velocity = Vector3.one;
 
@@ -14,7 +15,7 @@ public class EnemyFootUnit : Unit {
     float timeStartedMoving;
     float timeOfMovement = .8f;
 
-    public string name = "enemy";
+    public string unitName = "enemy";
 
     //Vector3 startPos;
 
@@ -24,6 +25,7 @@ public class EnemyFootUnit : Unit {
 
     public Stack<Vector3> path;
 
+
     public override void SetPath(Stack<Vector3> stack)
     {
         path = stack;
@@ -31,15 +33,19 @@ public class EnemyFootUnit : Unit {
 
     // Use this for initialization
     void Start () {
-        gameObject.name = name;
+        gameObject.GetComponent<SphereCollider>().radius = 0;
+        gameObject.name = unitName;
         SetMaxHP(locHP);
         AdjustHP(locHP);
+        SetAttackRange(aRange);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
         if (state == UnitState.Moving)
         {
+            gameObject.GetComponent<SphereCollider>().radius = range;
             float timeSinceStarted = Time.time - timeStartedMoving;
             float percentageComplete = timeSinceStarted / timeOfMovement;
 
@@ -49,11 +55,7 @@ public class EnemyFootUnit : Unit {
             {
                 if(tilesMoved == range || path.Count == 0)
                 {
-                    path = null;
-                    tilesMoved = 0;
-					state = UnitState.Idle;
-                    Camera.main.GetComponent<EnemyController>().UnitFinished();
-                    tilesMoved = 0;
+                    Finish();
                 }
                 else
                 {
@@ -81,6 +83,23 @@ public class EnemyFootUnit : Unit {
         return ret;
     }
 
+    void OnTriggerEnter(Collider col)
+    {
+        
+        if (col.gameObject.name == "player_unit" && state == UnitState.Moving)
+        {
+            state = UnitState.Attacking;
+            while (path.Count != 0)
+            {
+                path.Pop(); 
+            }
+
+            col.gameObject.GetComponent<Unit>().AdjustHP(-attackDamage);
+            Finish();
+        }
+        
+    }
+
     public override void Move()
     {
         if(path != null)
@@ -94,7 +113,13 @@ public class EnemyFootUnit : Unit {
 
     public override void Finish()
     {
-        throw new NotImplementedException();
+        path = null;
+        tilesMoved = 0;
+        state = UnitState.Idle;
+        gameObject.GetComponent<SphereCollider>().radius = 0;
+        tilesMoved = 0;
+        Camera.main.GetComponent<EnemyController>().UnitFinished();
+        
     }
 
     internal override void Attack()

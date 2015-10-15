@@ -27,9 +27,10 @@ public class FootUnit : Unit
     public Stack<Vector3> path;// = new Stack<Vector3>();
 
     private Unit target;
-
+    private string unitName = "player_unit";
     void Start()
     {
+        gameObject.name = unitName;
         gameObject.GetComponent<SphereCollider>().radius = 0;
         SetMaxHP(locHP);
         AdjustHP(locHP);
