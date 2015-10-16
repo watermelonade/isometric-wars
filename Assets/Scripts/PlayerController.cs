@@ -86,7 +86,6 @@ public class PlayerController : MonoBehaviour {
         {
             if (state == PlayerState.UnitSelected)
             {
-                
                 map.UpdateUnitPath(position, selectedUnit, true);
                 map.RemovePlayerRange();
                 selectedUnit.Move();

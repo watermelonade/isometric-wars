@@ -15,8 +15,7 @@ public class BattleManager : MonoBehaviour {
 
     public Vector3 ePlayerStart;
     public Vector3 ePlayerStart2;
-    public Vector3 ePlayerStart3;
-
+    public Vector3 ePlayerStart3;    
 
     Map map;
 
@@ -39,7 +38,7 @@ public class BattleManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        
+
         mainCam = GameObject.Find("Main Camera");
         
         map = gameObject.AddComponent<Map>();
