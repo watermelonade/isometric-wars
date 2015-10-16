@@ -30,6 +30,7 @@ public class Map : MonoBehaviour {
 	private Coordinate[,] pathMap;
 
 
+
 	private GameObject[,] board;
     public string[][] levelBase;
 
@@ -191,6 +192,98 @@ public class Map : MonoBehaviour {
 		}*/
 	}
 
+
+
+
+	public void UpdatePathMapAvoidClaimedSpaces (Unit u, List<Unit> units)
+	{
+		Vector3 currentPositionVect = u.transform.position;
+		int currentX = (int)currentPositionVect.x;
+		int currentY = (int)currentPositionVect.z;
+		bool [,] validSpacesMap = new bool[width, height];
+		
+		for (int x = 0; x < width; x++){
+			for (int y = 0; y < height; y++) { 
+				distanceMap [x, y] = 1000000;
+				pathMap [x, y] = new Coordinate (-1, -1);
+				validSpacesMap[x,y] = !(board[x,y] == null);
+			}
+		}
+
+
+		//Unit[] units = FindObjectsOfType(typeof(Unit)) as Unit[];
+		foreach (Unit unit in units) {
+			Vector3 unitPosition = unit.transform.position;
+			validSpacesMap[(int)unitPosition.x,(int)unitPosition.z] = false;
+		}
+
+		/*for (int x = 0; x < width; x++){
+			for (int y = 0; y < height; y++) { 
+				if(!validSpacesMap[x,y])
+				{
+					GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+					cube.transform.position = new Vector3(x, 1F, y);
+				}
+			}
+		}*/
+
+		distanceMap [currentX, currentY] = 0;
+		validSpacesMap [currentX, currentY] = true;
+		
+		HeapPriorityQueue<Coordinate> priorityQueue = new HeapPriorityQueue<Coordinate>(height*width);
+		priorityQueue.Enqueue(new Coordinate (currentX, currentY), 0);
+
+		while( priorityQueue.Count > 0)
+		{	
+			Coordinate c = priorityQueue.Dequeue();
+			
+			int cDistanceInline = distanceMap[c.X, c.Y] + 2;
+			int cDistanceDiagonal = distanceMap[c.X, c.Y] + 3;
+			
+			for (int x = c.X - 1; x <= c.X + 1; x++)
+			{
+				for (int y = c.Y - 1; y <= c.Y + 1; y++)
+				{
+					//if(board[c.X, c.Y] == null)
+					//	continue;
+					if(!validSpacesMap[c.X,c.Y])
+						continue;
+					if(x == c.X && y == c.Y)
+						continue;
+					if(x < 0 || x >= width)
+						continue;
+					if(y < 0 || y >= height)
+						continue;
+					if(c.X == x || c.Y == y)
+					{
+						if(cDistanceInline < distanceMap[x,y])
+						{
+							distanceMap[x,y] = cDistanceInline;
+							priorityQueue.Enqueue(new Coordinate (x, y), cDistanceInline);
+							pathMap[x,y] = new Coordinate(c.X, c.Y);
+						}
+					}
+					else
+					{
+						if(cDistanceDiagonal < distanceMap[x,y])
+						{
+							distanceMap[x,y] = cDistanceDiagonal;
+							priorityQueue.Enqueue(new Coordinate (x, y), cDistanceDiagonal);
+							pathMap[x,y] = new Coordinate(c.X, c.Y);
+						}
+					}
+				}
+			}
+		}
+		priorityQueue.Clear();
+	}
+
+
+
+
+
+
+
 	public void UpdateUnitPath (Vector3 position, Unit currentUnit, bool showPath)
 	{
 		RemovePath ();
@@ -220,6 +313,38 @@ public class Map : MonoBehaviour {
 
         currentUnit.SetPath(path);
 		
+	}
+
+	
+	public bool UpdateUnitPath (Vector3 position, Unit currentUnit, bool showPath, int stepsAway)
+	{
+		RemovePath ();
+		int currentX = (int)position.x;
+		int currentY = (int)position.z;
+		Coordinate current;
+		Stack<Vector3> path = new Stack<Vector3>();
+		Vector3 offset = new Vector3 (0F, 1.5F, 0F);
+		for (int step = 1; step <= stepsAway && currentX >= 0 && currentY >= 0; step++) {
+			current = pathMap [currentX, currentY];
+			currentX = current.X;
+			currentY = current.Y;
+		}
+		if (currentX < 0 && currentY < 0)
+			return false;
+
+		while (currentX >= 0 && currentY >= 0) 
+		{
+			if(showPath)
+				board[currentX, currentY].GetComponent<MouseClick>().Highlight();
+			
+			path.Push(board[currentX, currentY].transform.position + offset);
+			current = pathMap[currentX, currentY];
+			currentX = current.X;
+			currentY = current.Y;
+			
+		}	
+		currentUnit.SetPath(path);
+		return true;
 	}
 
 	public void RemovePath (){

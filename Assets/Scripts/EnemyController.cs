@@ -10,41 +10,81 @@ public class EnemyController : MonoBehaviour {
 
     bool turn;
     bool moved = false;
-    float unitsFinished = 0f;
+    int unitsFinished = 0;
+
+	bool unitFinished;
+
+
+	int state = 1;
+	const int waitingForTurn = 1, working = 2, waiting = 3, cleanUp = 4;
 
 	// Use this for initialization
 	void Start () {
-	
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (turn)
-        {
-            if (moved == false)
-            {
-                for (int i = 0; i < units.Count; i++)
-                {
-                    map.UpdatePathMap(units[i]);
-                    Vector3 closestPlayerPos = GetClosestPlayerUnitPos(units[i]);
-                   
-                    map.UpdateUnitPath(closestPlayerPos, units[i], false);
-                    units[i].Move();
-                }
-                moved = true;
-            }
+		//if(turn)
+		switch (state) {
+		case waitingForTurn:
+			break;
 
-            if(unitsFinished == units.Count)
-            {
-                turn = false;
-                unitsFinished = 0f;
-                moved = false;
-                map.RemovePath();
-                BattleManager.FinishTurn();
-            }
+		case working:
+			if (unitsFinished == units.Count) {
+				state = cleanUp;
+			}else{
+				Unit currentUnit = units [unitsFinished];
+				map.UpdatePathMapAvoidClaimedSpaces (currentUnit, units);
+				//map.UpdatePathMap(currentUnit);
+				Vector3 closestPlayerPos = GetClosestPlayerUnitPos (currentUnit);
+				if (map.UpdateUnitPath (closestPlayerPos, currentUnit, false, 1))
+					currentUnit.Move ();
+				else {
+					UnitFinished();
+				}
+				state = waiting;
+			}
+			break;
+		
+		case waiting:
+			if(unitFinished){
+				state = working;
+				unitFinished = false;
+			}
+			break;
 
-            
-        }
+		case cleanUp:
+			unitsFinished = 0;
+			unitFinished = false;
+			map.RemovePath ();
+			BattleManager.FinishTurn ();
+			state = waitingForTurn;
+			break;
+		}
+
+        /*if (turn) {
+			if (moved == false && unitFinished == true) {
+				map.clearClaimedSpaces ();
+				for (int i = 0; i < units.Count; i++) {
+					Unit currentUnit = units [unitsFinished];
+					map.UpdatePathMapAvoidClaimedSpaces (currentUnit);
+					Vector3 closestPlayerPos = GetClosestPlayerUnitPos (currentUnit);
+					if (map.UpdateUnitPath (closestPlayerPos, currentUnit, false, 1))
+						currentUnit.Move ();
+				}
+				moved = true;
+			}
+
+			if (unitsFinished == units.Count) {
+				turn = false;
+			}
+     
+		} else {
+			unitsFinished = 0;
+			moved = false;
+			map.RemovePath ();
+			BattleManager.FinishTurn ();
+		}*/
 	}
 
     public void SetUnits(List<Unit> u)
@@ -59,7 +99,9 @@ public class EnemyController : MonoBehaviour {
 
     public void ActivateTurn()
     {
-        turn = true;
+        if(state == waitingForTurn)
+			state = working;
+		//turn = true;
     }
 
     void MoveUnits()
@@ -96,6 +138,7 @@ public class EnemyController : MonoBehaviour {
     public void UnitFinished()
     {
         unitsFinished++;
+		unitFinished = true;
     }
 
     public void OnMouseDown()
