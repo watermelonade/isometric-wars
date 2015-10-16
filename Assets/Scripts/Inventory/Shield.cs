@@ -12,3 +12,4 @@ public class Shield : InventoryItem
         defense = pdefense;
 
     }
+}

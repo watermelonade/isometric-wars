@@ -17,6 +17,8 @@ public class EnemyFootUnit : Unit {
 
     public string unitName = "enemy";
 
+	List<Unit> prey;
+
     //Vector3 startPos;
 
 	//used in old bool implementation, now using state enum
@@ -43,31 +45,36 @@ public class EnemyFootUnit : Unit {
 	// Update is called once per frame
 	void Update () {
 
-        if (state == UnitState.Moving)
-        {
-            gameObject.GetComponent<SphereCollider>().radius = range;
-            float timeSinceStarted = Time.time - timeStartedMoving;
-            float percentageComplete = timeSinceStarted / timeOfMovement;
-
-            transform.position = Vector3.Lerp(startPos, dest, percentageComplete);//Vector3.SmoothDamp(transform.position, dest, ref velocity, 1.5f);
-
-            if (percentageComplete >= 1.0f)
-            {
-                if(tilesMoved == range || path.Count == 0)
-                {
-                    Finish();
-                }
-                else
-                {
-                    percentageComplete = 0f;
-                    timeStartedMoving = Time.time;
-                    tilesMoved++;
-                    dest = path.Pop();
-                    startPos = transform.position;
-                }
+		switch (state) {
+		case UnitState.Moving:
+			gameObject.GetComponent<SphereCollider> ().radius = range;
+			float timeSinceStarted = Time.time - timeStartedMoving;
+			float percentageComplete = timeSinceStarted / timeOfMovement;
+			transform.position = Vector3.Lerp (startPos, dest, percentageComplete);
+			if (percentageComplete >= 1.0f) {
+				if (tilesMoved == range || path.Count == 0) {
+					//state = UnitState.Attacking;
+					Finish ();
+				} else {
+					percentageComplete = 0f;
+					timeStartedMoving = Time.time;
+					tilesMoved++;
+					dest = path.Pop ();
+					startPos = transform.position;
+				}
                 
-            }
-        }
+			}
+			break;
+
+		/*case UnitState.Attacking:
+			foreach ( Unit x in prey)
+				x.AdjustHP(-attackDamage);
+			Finish ();
+			break;*/
+        
+		case UnitState.Idle:
+			break;
+		}
 	}
 
     private bool vEquals(Vector3 x, Vector3 y)
@@ -88,14 +95,15 @@ public class EnemyFootUnit : Unit {
         
         if (col.gameObject.name == "player_unit" && state == UnitState.Moving)
         {
-            state = UnitState.Attacking;
-            while (path.Count != 0)
-            {
-                path.Pop(); 
-            }
+            //state = UnitState.Attacking;
+            //while (path.Count != 0)
+            //{
+            //    path.Pop(); 
+            //}
+			//if(
+			//prey.Add (col.gameObject.GetComponent<Unit>());
 
-            col.gameObject.GetComponent<Unit>().AdjustHP(-attackDamage);
-            Finish();
+			col.gameObject.GetComponent<Unit>().AdjustHP(-attackDamage);
         }
         
     }
