@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour {
     float unitsFinished = 0;
 
     public PlayerState state;
+    public static Plane mouseInputPlane;
 
     public enum PlayerState
     {
@@ -28,7 +29,9 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         state = PlayerState.ChooseUnit;
-	}
+        mouseInputPlane = new Plane(Vector3.zero + new Vector3(0, 3, 0),new Vector3(-1, .6f,0));
+        
+    }
 	
 	// Update is called once per frame
 	void Update () {

@@ -8,8 +8,6 @@ public class FootUnit : Unit
 
     int ap = 12;
 
-    
-
     //public Vector3 dest;
     bool act;
     Vector3 velocity = Vector3.one;
@@ -28,8 +26,14 @@ public class FootUnit : Unit
 
     private Unit target;
     private string unitName = "player_unit";
+
+    private Gun gun;
+
+    private LineRenderer sight;
+    private float sightDistance = 5;
     void Start()
     {
+        gun = GetComponent<Gun>();
         gameObject.name = unitName;
         gameObject.GetComponent<SphereCollider>().radius = 0;
         SetMaxHP(locHP);
@@ -71,10 +75,47 @@ public class FootUnit : Unit
 
         }
 
+        if (state == UnitState.Attacking)
+        {
+            //raycast from camera to mouseinputplane
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            float dist;
+            PlayerController.mouseInputPlane.Raycast(ray, out dist);
+            
+            Vector3 direction = ray.GetPoint(dist);
+
+
+            //Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            sight.SetPosition(1, direction);
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                gun.Fire(direction);
+            }
+
+            /*if (Input.GetMouseButtonDown(0))
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit[] hits;
+                hits = Physics.RaycastAll(ray, Mathf.Infinity);
+                //print(hit.collider.gameObject.name);
+                for (int i = 0; i < hits.Length; i++)
+                {
+                    if (hits[i].collider.gameObject.name == "enemy_unit")
+                    {
+                        gun.Fire(hits[i].collider.transform.position);
+                        Finish();
+                    }
+                }
+            }*/
+            //Debug.DrawLine(transform.position, hit.transform.position, Color.red);
+        }
+
     }
 
     public override void Finish()
     {
+        state = UnitState.Idle;
         path = null;
         act = false;
         hasMoved = false;
@@ -120,7 +161,6 @@ public class FootUnit : Unit
     public void OnMouseDown()
     {
         GameObject.Find("Main Camera").GetComponent<PlayerController>().SendMessage("UnitSelected", this);
-
         Select();
     }
 
@@ -143,9 +183,21 @@ public class FootUnit : Unit
 
     internal override void Attack()
     {
-        if (target)
+        //PlayerController.mouseInputPlane.SetActive(true);
+        //PlayerController.mouseInputPlane.transform.position = transform.position;
+        
+        state = UnitState.Attacking;
+        sight = gameObject.AddComponent<LineRenderer>();
+        sight.useWorldSpace = true;
+        sight.SetWidth(0.1f, 0.1f);
+        sight.SetPosition(0, transform.position);
+        //sight.SetVertexCount(20);
+        if (gameObject.GetComponent<ChoiceMenu>() != null)
         {
-            target.AdjustHP(-attackDamage);
+            DestroyImmediate(gameObject.GetComponent<ChoiceMenu>());
         }
+
+
+
     }
 }

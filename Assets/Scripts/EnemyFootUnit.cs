@@ -15,7 +15,7 @@ public class EnemyFootUnit : Unit {
     float timeStartedMoving;
     float timeOfMovement = .8f;
 
-    public string unitName = "enemy";
+    public string unitName = "enemy_unit";
 
 	List<Unit> prey;
 
@@ -35,7 +35,7 @@ public class EnemyFootUnit : Unit {
 
     // Use this for initialization
     void Start () {
-        gameObject.GetComponent<SphereCollider>().radius = 0;
+        //gameObject.GetComponent<SphereCollider>().radius = 0;
         gameObject.name = unitName;
         SetMaxHP(locHP);
         AdjustHP(locHP);
@@ -51,6 +51,7 @@ public class EnemyFootUnit : Unit {
 			float timeSinceStarted = Time.time - timeStartedMoving;
 			float percentageComplete = timeSinceStarted / timeOfMovement;
 			transform.position = Vector3.Lerp (startPos, dest, percentageComplete);
+
 			if (percentageComplete >= 1.0f) {
 				if (tilesMoved == range || path.Count == 0) {
 					//state = UnitState.Attacking;
@@ -95,14 +96,7 @@ public class EnemyFootUnit : Unit {
         
         if (col.gameObject.name == "player_unit" && state == UnitState.Moving)
         {
-            //state = UnitState.Attacking;
-            //while (path.Count != 0)
-            //{
-            //    path.Pop(); 
-            //}
-			//if(
-			//prey.Add (col.gameObject.GetComponent<Unit>());
-
+            
 			col.gameObject.GetComponent<Unit>().AdjustHP(-attackDamage);
         }
         
@@ -128,6 +122,14 @@ public class EnemyFootUnit : Unit {
         tilesMoved = 0;
         Camera.main.GetComponent<EnemyController>().UnitFinished();
         
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.GetComponent<Bullet>())
+        {
+            AdjustHP(-1);
+        }
     }
 
     internal override void Attack()
