@@ -90,7 +90,10 @@ public class FootUnit : Unit
 
             if (Input.GetMouseButtonDown(0))
             {
-                gun.Fire(direction);
+                if (!gun.Fire(direction))
+                {
+                    Finish();
+                }
             }
 
             /*if (Input.GetMouseButtonDown(0))
@@ -119,6 +122,7 @@ public class FootUnit : Unit
         path = null;
         act = false;
         hasMoved = false;
+        Destroy(sight);
         gameObject.GetComponent<SphereCollider>().radius = 0;
         Destroy(gameObject.GetComponent<ChoiceMenu>());
         Camera.main.GetComponent<PlayerController>().UnitFinished();
