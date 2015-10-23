@@ -31,6 +31,7 @@ public class FootUnit : Unit
 
     private LineRenderer sight;
     private float sightDistance = 5;
+
     void Start()
     {
         gun = GetComponent<Gun>();
@@ -126,6 +127,12 @@ public class FootUnit : Unit
         gameObject.GetComponent<SphereCollider>().radius = 0;
         Destroy(gameObject.GetComponent<ChoiceMenu>());
         Camera.main.GetComponent<PlayerController>().UnitFinished();
+    }
+
+    internal void Die()
+    {
+        Camera.main.GetComponent<PlayerController>().UnitDied(gameObject);
+        Destroy(gameObject);
     }
 
     public override void Move()

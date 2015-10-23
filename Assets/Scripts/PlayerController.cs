@@ -143,5 +143,8 @@ public class PlayerController : MonoBehaviour {
         //BattleManager.FinishTurn();
     }
 
-
+    public void UnitDied(GameObject obj)
+    {
+        units.Remove(obj.GetComponent<Unit>());
+    }
 }

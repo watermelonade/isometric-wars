@@ -19,14 +19,18 @@ public class EnemyFootUnit : Unit {
 
 	List<Unit> prey;
 
-    //Vector3 startPos;
-
-	//used in old bool implementation, now using state enum
-    //bool act;
-	
-
     public Stack<Vector3> path;
+    private EnemyAI ai;
 
+    public enum EnemyObjective
+    {
+        Advance,
+        Retreat, 
+        GetHealth,
+        Attack,
+        FindCover
+
+    }
 
     public override void SetPath(Stack<Vector3> stack)
     {
@@ -35,7 +39,9 @@ public class EnemyFootUnit : Unit {
 
     // Use this for initialization
     void Start () {
-        //gameObject.GetComponent<SphereCollider>().radius = 0;
+        
+        ai = gameObject.AddComponent<EnemyAI>();
+
         gameObject.name = unitName;
         SetMaxHP(locHP);
         AdjustHP(locHP);
@@ -54,7 +60,6 @@ public class EnemyFootUnit : Unit {
 
 			if (percentageComplete >= 1.0f) {
 				if (tilesMoved == range || path.Count == 0) {
-					//state = UnitState.Attacking;
 					Finish ();
 				} else {
 					percentageComplete = 0f;
@@ -67,11 +72,11 @@ public class EnemyFootUnit : Unit {
 			}
 			break;
 
-		/*case UnitState.Attacking:
-			foreach ( Unit x in prey)
-				x.AdjustHP(-attackDamage);
-			Finish ();
-			break;*/
+		case UnitState.Attacking:
+			//foreach ( Unit x in prey)
+			//	x.AdjustHP(-attackDamage);
+			//Finish ();
+			break;
         
 		case UnitState.Idle:
 			break;
@@ -96,10 +101,15 @@ public class EnemyFootUnit : Unit {
         
         if (col.gameObject.name == "player_unit" && state == UnitState.Moving)
         {
-            
 			col.gameObject.GetComponent<Unit>().AdjustHP(-attackDamage);
         }
         
+    }
+
+    internal void Die()
+    {
+        Camera.main.GetComponent<EnemyController>().UnitDied(gameObject);
+        Destroy(gameObject);
     }
 
     public override void Move()
@@ -136,4 +146,33 @@ public class EnemyFootUnit : Unit {
     {
         throw new NotImplementedException();
     }
+
+    #region AI helper functions
+
+    public float ChanceToHit()
+    {
+        return 0;
+    }
+
+    public float NumEnemiesInRange()
+    {
+        return 0;
+    }
+
+    public float NumFriendsInRange()
+    {
+        return 0;
+    }
+
+    public Unit ClosestUnit()
+    {
+        return null;
+    }
+
+    public float DistanceToClosestUnit()
+    {
+        return 0;
+    }
+
+    #endregion
 }

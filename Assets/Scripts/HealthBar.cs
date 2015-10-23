@@ -87,7 +87,13 @@ public class HealthBar : MonoBehaviour {
 
         if (health < 0)
         {
-            Destroy(gameObject);
+            if (gameObject.GetComponent<EnemyFootUnit>())
+                gameObject.GetComponent<EnemyFootUnit>().Die();
+
+            if (gameObject.GetComponent<FootUnit>())
+                gameObject.GetComponent<FootUnit>().Die();
+
+            Destroy(this);
         }
     }
 

@@ -24,7 +24,7 @@ public class EnemyController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//if(turn)
+		
 		switch (state) {
 		case waitingForTurn:
 			break;
@@ -147,5 +147,11 @@ public class EnemyController : MonoBehaviour {
         //GameObject.Find("Main Camera").GetComponent<PlayerController>().SendMessage("UnitSelected", this);
 
         //Select();
+    }
+
+    public void UnitDied(GameObject obj)
+    {
+        units.Remove(obj.GetComponent<Unit>());
+        
     }
 }
