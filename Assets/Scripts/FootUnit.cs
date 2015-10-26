@@ -177,7 +177,12 @@ public class FootUnit : Unit
 
     void OnTriggerEnter(Collider col)
     {
-        if(hasMoved == true && !target)
+        if (col.gameObject.GetComponent<Bullet>())
+        {
+            AdjustHP(-1);
+        }
+
+        if (hasMoved == true && !target)
         {
             if (col.gameObject.name == "enemy")
             {
@@ -190,6 +195,14 @@ public class FootUnit : Unit
     {
         if(col.gameObject.name == "enemy")
             target = null;
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.GetComponent<Bullet>())
+        {
+            AdjustHP(-1);
+        }
     }
 
     internal override void Attack()

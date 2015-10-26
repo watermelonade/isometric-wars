@@ -5,8 +5,8 @@ using System.Collections.Generic;
 
 public class EnemyFootUnit : Unit {
 
-    int range = 8;
-    int aRange = 3;
+    int range = 3;
+    public int attRange = 3;
     int tilesMoved = 0;
     Vector3 velocity = Vector3.one;
 
@@ -16,7 +16,7 @@ public class EnemyFootUnit : Unit {
     float timeOfMovement = .8f;
 
     public EnemySight sight;
-
+    private Gun gun;
     public string unitName = "enemy_unit";
 
 	List<Unit> prey;
@@ -45,7 +45,8 @@ public class EnemyFootUnit : Unit {
 
     // Use this for initialization
     void Start () {
-        
+
+        gun = gameObject.GetComponent<Gun>();
         ai = gameObject.GetComponent<EnemyAI>();
         sight = gameObject.GetComponent<EnemySight>();
         sight.enabled = false;
@@ -54,7 +55,7 @@ public class EnemyFootUnit : Unit {
         gameObject.name = unitName;
         SetMaxHP(locHP);
         AdjustHP(locHP);
-        SetAttackRange(aRange);
+        SetAttackRange(attRange);
 	}
 	
 	// Update is called once per frame
@@ -71,7 +72,8 @@ public class EnemyFootUnit : Unit {
 			    break;
 
 		    case EnemyObjective.Attack:
-                sight.enabled = true;
+                gameObject.GetComponent<SphereCollider>().enabled = false;
+                Attack();
 			    break;
         
 		    case EnemyObjective.FindCover:
@@ -142,7 +144,9 @@ public class EnemyFootUnit : Unit {
         {
             if (tilesMoved == range || path.Count == 0)
             {
-                Finish();
+                //Finish();
+                objective = EnemyObjective.Attack;
+                active = false;
             }
             else
             {
@@ -164,6 +168,7 @@ public class EnemyFootUnit : Unit {
         objective = EnemyObjective.Idle;
         active = false;
         sight.enabled = false;
+        gameObject.GetComponent<SphereCollider>().enabled = true;
         gameObject.GetComponent<SphereCollider>().radius = .5f;
         tilesMoved = 0;
         Camera.main.GetComponent<EnemyController>().UnitFinished();
@@ -172,7 +177,7 @@ public class EnemyFootUnit : Unit {
 
     void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.GetComponent<Bullet>())
+        if (col.gameObject.GetComponent<Bullet>() && objective != EnemyObjective.Attack)
         {
             AdjustHP(-1);
         }
@@ -180,7 +185,9 @@ public class EnemyFootUnit : Unit {
 
     internal override void Attack()
     {
-        throw new NotImplementedException();
+        while(gun.Fire( EnemyController.GetClosestPlayerUnitPos(this) ));
+
+        Finish();
     }
 
     public void Act()

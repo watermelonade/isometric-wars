@@ -21,10 +21,11 @@ public class Bullet : MonoBehaviour {
     void OnTriggerEnter(Collider hit)
     {
         //Destroy(this);
-        if (hit.gameObject.GetComponent<EnemyFootUnit>())
+        
+        if (hit.gameObject.GetComponent<Unit>())
         {
-            hit.gameObject.GetComponent<EnemyFootUnit>().AdjustHP(-1);
-            Destroy(gameObject);
+            //hit.gameObject.GetComponent<EnemyFootUnit>().AdjustHP(-1);
+            //Destroy(gameObject);
         }
     } 
 

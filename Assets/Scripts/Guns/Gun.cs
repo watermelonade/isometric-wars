@@ -3,8 +3,9 @@ using System.Collections;
 
 public class Gun : MonoBehaviour {
 
-    float bulletSpeed = 30;
-    int magSize = 4;
+    public float bulletSpeed = 30;
+    public int magSize = 4;
+
     int shotsFired = 0;
 
 	public bool Fire(Vector3 aim)

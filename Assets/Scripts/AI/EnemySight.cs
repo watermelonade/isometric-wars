@@ -186,7 +186,7 @@ public class EnemySight : MonoBehaviour
 
     public float DistanceToClosestUnit()
     {
-        float closestDistance = 0;
+        float closestDistance = Mathf.Infinity;
 
         foreach(GameObject player in players)
         {
