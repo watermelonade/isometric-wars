@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class EnemyFootUnit : Unit {
 
-    int range = 3;
+    int range = 8;
     int aRange = 3;
     int tilesMoved = 0;
     Vector3 velocity = Vector3.one;
@@ -15,6 +15,8 @@ public class EnemyFootUnit : Unit {
     float timeStartedMoving;
     float timeOfMovement = .8f;
 
+    public EnemySight sight;
+
     public string unitName = "enemy_unit";
 
 	List<Unit> prey;
@@ -22,15 +24,19 @@ public class EnemyFootUnit : Unit {
     public Stack<Vector3> path;
     private EnemyAI ai;
 
+    private bool active = false;
+
     public enum EnemyObjective
     {
         Advance,
         Retreat, 
         GetHealth,
         Attack,
-        FindCover
-
+        FindCover,
+        Idle
     }
+
+    EnemyObjective objective;
 
     public override void SetPath(Stack<Vector3> stack)
     {
@@ -40,7 +46,10 @@ public class EnemyFootUnit : Unit {
     // Use this for initialization
     void Start () {
         
-        ai = gameObject.AddComponent<EnemyAI>();
+        ai = gameObject.GetComponent<EnemyAI>();
+        sight = gameObject.GetComponent<EnemySight>();
+        sight.enabled = false;
+        objective = EnemyObjective.Idle;
 
         gameObject.name = unitName;
         SetMaxHP(locHP);
@@ -51,37 +60,39 @@ public class EnemyFootUnit : Unit {
 	// Update is called once per frame
 	void Update () {
 
-		switch (state) {
-		case UnitState.Moving:
-			gameObject.GetComponent<SphereCollider> ().radius = range;
-			float timeSinceStarted = Time.time - timeStartedMoving;
-			float percentageComplete = timeSinceStarted / timeOfMovement;
-			transform.position = Vector3.Lerp (startPos, dest, percentageComplete);
+        if(active == true)
+            objective = ai.Decide(this);
 
-			if (percentageComplete >= 1.0f) {
-				if (tilesMoved == range || path.Count == 0) {
-					Finish ();
-				} else {
-					percentageComplete = 0f;
-					timeStartedMoving = Time.time;
-					tilesMoved++;
-					dest = path.Pop ();
-					startPos = transform.position;
-				}
-                
-			}
-			break;
+		switch (objective) {
+		    case EnemyObjective.Advance:
+                //sight.enabled = false;
+                //gameObject.GetComponent<SphereCollider> ().radius = range;
+                Move();
+			    break;
 
-		case UnitState.Attacking:
-			//foreach ( Unit x in prey)
-			//	x.AdjustHP(-attackDamage);
-			//Finish ();
-			break;
+		    case EnemyObjective.Attack:
+                sight.enabled = true;
+			    break;
         
-		case UnitState.Idle:
-			break;
+		    case EnemyObjective.FindCover:
+                //gameObject.GetComponent<SphereCollider>().radius = .5F;
+                break;
+
+            case EnemyObjective.GetHealth:
+                break;
+
+            case EnemyObjective.Idle:
+                break;
+
+            case EnemyObjective.Retreat:
+                break;
 		}
 	}
+
+    internal float ChanceToHit()
+    {
+        return 1;
+    }
 
     private bool vEquals(Vector3 x, Vector3 y)
     {
@@ -114,12 +125,34 @@ public class EnemyFootUnit : Unit {
 
     public override void Move()
     {
-        if(path != null)
+        /*if(path != null)
         {
             state = UnitState.Moving;
             timeStartedMoving = Time.time;
             startPos = transform.position;
             dest = path.Pop();
+        }*/
+
+        float timeSinceStarted = Time.time - timeStartedMoving;
+        float percentageComplete = timeSinceStarted / timeOfMovement;
+        transform.position = Vector3.Lerp(startPos, dest, percentageComplete);
+
+
+        if (percentageComplete >= 1.0f)
+        {
+            if (tilesMoved == range || path.Count == 0)
+            {
+                Finish();
+            }
+            else
+            {
+                percentageComplete = 0f;
+                timeStartedMoving = Time.time;
+                tilesMoved++;
+                dest = path.Pop();
+                startPos = transform.position;
+            }
+
         }
     }
 
@@ -128,7 +161,10 @@ public class EnemyFootUnit : Unit {
         path = null;
         tilesMoved = 0;
         state = UnitState.Idle;
-        gameObject.GetComponent<SphereCollider>().radius = 0;
+        objective = EnemyObjective.Idle;
+        active = false;
+        sight.enabled = false;
+        gameObject.GetComponent<SphereCollider>().radius = .5f;
         tilesMoved = 0;
         Camera.main.GetComponent<EnemyController>().UnitFinished();
         
@@ -147,32 +183,24 @@ public class EnemyFootUnit : Unit {
         throw new NotImplementedException();
     }
 
-    #region AI helper functions
-
-    public float ChanceToHit()
+    public void Act()
     {
-        return 0;
+        active = true;
+        timeStartedMoving = Time.time;
+        startPos = transform.position;
+        sight.enabled = true;
+        
+        BattleManager.map.UpdatePathMapAvoidClaimedSpaces(this, EnemyController.units);
+        Vector3 closestPlayerPos = EnemyController.GetClosestPlayerUnitPos(this);
+
+        
+
+        if (!BattleManager.map.UpdateUnitPath(closestPlayerPos, this, false, 1))
+        {
+            Finish();
+        }
+
+        dest = path.Pop();
     }
 
-    public float NumEnemiesInRange()
-    {
-        return 0;
-    }
-
-    public float NumFriendsInRange()
-    {
-        return 0;
-    }
-
-    public Unit ClosestUnit()
-    {
-        return null;
-    }
-
-    public float DistanceToClosestUnit()
-    {
-        return 0;
-    }
-
-    #endregion
 }

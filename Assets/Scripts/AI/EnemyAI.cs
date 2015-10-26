@@ -4,6 +4,12 @@ using System.Collections.Generic;
 
 public class EnemyAI : MonoBehaviour {
 
+    EnemySight sight;
+
+    public void Awake()
+    {
+        sight = gameObject.GetComponent<EnemySight>();
+    }
 
     public EnemyFootUnit.EnemyObjective Decide(Unit unit)
     {
@@ -13,9 +19,9 @@ public class EnemyAI : MonoBehaviour {
         float maxHealth = fu.GetMaxHP();
         float range = fu.GetAttackRange();
         Vector3 position = unit.gameObject.transform.position;
-        float distanceToNearestEnemy = fu.DistanceToClosestUnit();
-        float numEnemiesInRange = fu.NumEnemiesInRange();
-        float numFriendsInRange = fu.NumFriendsInRange();
+        float distanceToNearestEnemy = sight.DistanceToClosestUnit();
+        float numEnemiesInRange = sight.NumEnemiesInRange();
+        float numFriendsInRange = sight.NumFriendsInRange();
 
         SortedDictionary<EnemyFootUnit.EnemyObjective, float> rewards = new SortedDictionary<EnemyFootUnit.EnemyObjective, float>();
 

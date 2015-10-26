@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 public class EnemyController : MonoBehaviour {
 
-    List<Unit> units;
+    public static List<Unit> units;
 
-    Map map;
+    //Map map;
 
     bool turn;
     bool moved = false;
@@ -33,16 +33,18 @@ public class EnemyController : MonoBehaviour {
 			if (unitsFinished == units.Count) {
 				state = cleanUp;
 			}else{
-				Unit currentUnit = units [unitsFinished];
-				map.UpdatePathMapAvoidClaimedSpaces (currentUnit, units);
-				//map.UpdatePathMap(currentUnit);
-				Vector3 closestPlayerPos = GetClosestPlayerUnitPos (currentUnit);
-				if (map.UpdateUnitPath (closestPlayerPos, currentUnit, false, 1))
-					currentUnit.Move ();
-				else {
-					UnitFinished();
-				}
-				state = waiting;
+                    /*Unit currentUnit = units [unitsFinished];
+                    map.UpdatePathMapAvoidClaimedSpaces (currentUnit, units);
+                    //map.UpdatePathMap(currentUnit);
+                    Vector3 closestPlayerPos = GetClosestPlayerUnitPos (currentUnit);
+                    if (map.UpdateUnitPath (closestPlayerPos, currentUnit, false, 1))
+                        currentUnit.Move ();
+                    else {
+                        UnitFinished();
+                    }*/
+
+                    units[unitsFinished].GetComponent<EnemyFootUnit>().Act();
+				    state = waiting;
 			}
 			break;
 		
@@ -56,7 +58,7 @@ public class EnemyController : MonoBehaviour {
 		case cleanUp:
 			unitsFinished = 0;
 			unitFinished = false;
-			map.RemovePath ();
+			BattleManager.map.RemovePath ();
 			BattleManager.FinishTurn ();
 			state = waitingForTurn;
 			break;
@@ -92,11 +94,6 @@ public class EnemyController : MonoBehaviour {
         units = u;
     }
 
-    public void SetMap(Map passedMap)
-    {
-        map = passedMap;
-    }
-
     public void ActivateTurn()
     {
         if(state == waitingForTurn)
@@ -112,7 +109,7 @@ public class EnemyController : MonoBehaviour {
         }
     }
 
-    Vector3 GetClosestPlayerUnitPos(Unit unit)
+    public static Vector3 GetClosestPlayerUnitPos(Unit unit)
     {
         GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("player");
 
@@ -139,6 +136,7 @@ public class EnemyController : MonoBehaviour {
     {
         unitsFinished++;
 		unitFinished = true;
+        state = working;
     }
 
     public void OnMouseDown()
