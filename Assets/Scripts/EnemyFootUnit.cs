@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class EnemyFootUnit : Unit {
 
     int range = 3;
-    int aRange = 3;
+    public int attRange = 3;
     int tilesMoved = 0;
     Vector3 velocity = Vector3.one;
 
@@ -15,18 +15,28 @@ public class EnemyFootUnit : Unit {
     float timeStartedMoving;
     float timeOfMovement = .8f;
 
-    public string unitName = "enemy";
+    public EnemySight sight;
+    private Gun gun;
+    public string unitName = "enemy_unit";
 
 	List<Unit> prey;
 
-    //Vector3 startPos;
-
-	//used in old bool implementation, now using state enum
-    //bool act;
-	
-
     public Stack<Vector3> path;
+    private EnemyAI ai;
 
+    private bool active = false;
+
+    public enum EnemyObjective
+    {
+        Advance,
+        Retreat, 
+        GetHealth,
+        Attack,
+        FindCover,
+        Idle
+    }
+
+    EnemyObjective objective;
 
     public override void SetPath(Stack<Vector3> stack)
     {
@@ -35,47 +45,56 @@ public class EnemyFootUnit : Unit {
 
     // Use this for initialization
     void Start () {
-        gameObject.GetComponent<SphereCollider>().radius = 0;
+
+        gun = gameObject.GetComponent<Gun>();
+        ai = gameObject.GetComponent<EnemyAI>();
+        sight = gameObject.GetComponent<EnemySight>();
+        sight.enabled = false;
+        objective = EnemyObjective.Idle;
+
         gameObject.name = unitName;
         SetMaxHP(locHP);
         AdjustHP(locHP);
-        SetAttackRange(aRange);
+        SetAttackRange(attRange);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-		switch (state) {
-		case UnitState.Moving:
-			gameObject.GetComponent<SphereCollider> ().radius = range;
-			float timeSinceStarted = Time.time - timeStartedMoving;
-			float percentageComplete = timeSinceStarted / timeOfMovement;
-			transform.position = Vector3.Lerp (startPos, dest, percentageComplete);
-			if (percentageComplete >= 1.0f) {
-				if (tilesMoved == range || path.Count == 0) {
-					//state = UnitState.Attacking;
-					Finish ();
-				} else {
-					percentageComplete = 0f;
-					timeStartedMoving = Time.time;
-					tilesMoved++;
-					dest = path.Pop ();
-					startPos = transform.position;
-				}
-                
-			}
-			break;
+        if(active == true)
+            objective = ai.Decide(this);
 
-		/*case UnitState.Attacking:
-			foreach ( Unit x in prey)
-				x.AdjustHP(-attackDamage);
-			Finish ();
-			break;*/
+		switch (objective) {
+		    case EnemyObjective.Advance:
+                //sight.enabled = false;
+                //gameObject.GetComponent<SphereCollider> ().radius = range;
+                Move();
+			    break;
+
+		    case EnemyObjective.Attack:
+                gameObject.GetComponent<SphereCollider>().enabled = false;
+                Attack();
+			    break;
         
-		case UnitState.Idle:
-			break;
+		    case EnemyObjective.FindCover:
+                //gameObject.GetComponent<SphereCollider>().radius = .5F;
+                break;
+
+            case EnemyObjective.GetHealth:
+                break;
+
+            case EnemyObjective.Idle:
+                break;
+
+            case EnemyObjective.Retreat:
+                break;
 		}
 	}
+
+    internal float ChanceToHit()
+    {
+        return 1;
+    }
 
     private bool vEquals(Vector3 x, Vector3 y)
     {
@@ -95,27 +114,49 @@ public class EnemyFootUnit : Unit {
         
         if (col.gameObject.name == "player_unit" && state == UnitState.Moving)
         {
-            //state = UnitState.Attacking;
-            //while (path.Count != 0)
-            //{
-            //    path.Pop(); 
-            //}
-			//if(
-			//prey.Add (col.gameObject.GetComponent<Unit>());
-
 			col.gameObject.GetComponent<Unit>().AdjustHP(-attackDamage);
         }
         
     }
 
+    internal void Die()
+    {
+        Camera.main.GetComponent<EnemyController>().UnitDied(gameObject);
+        Destroy(gameObject);
+    }
+
     public override void Move()
     {
-        if(path != null)
+        /*if(path != null)
         {
             state = UnitState.Moving;
             timeStartedMoving = Time.time;
             startPos = transform.position;
             dest = path.Pop();
+        }*/
+
+        float timeSinceStarted = Time.time - timeStartedMoving;
+        float percentageComplete = timeSinceStarted / timeOfMovement;
+        transform.position = Vector3.Lerp(startPos, dest, percentageComplete);
+
+
+        if (percentageComplete >= 1.0f)
+        {
+            if (tilesMoved == range || path.Count == 0)
+            {
+                //Finish();
+                objective = EnemyObjective.Attack;
+                active = false;
+            }
+            else
+            {
+                percentageComplete = 0f;
+                timeStartedMoving = Time.time;
+                tilesMoved++;
+                dest = path.Pop();
+                startPos = transform.position;
+            }
+
         }
     }
 
@@ -124,14 +165,49 @@ public class EnemyFootUnit : Unit {
         path = null;
         tilesMoved = 0;
         state = UnitState.Idle;
-        gameObject.GetComponent<SphereCollider>().radius = 0;
+        objective = EnemyObjective.Idle;
+        active = false;
+        sight.enabled = false;
+        gameObject.GetComponent<SphereCollider>().enabled = true;
+        gameObject.GetComponent<SphereCollider>().radius = .5f;
         tilesMoved = 0;
         Camera.main.GetComponent<EnemyController>().UnitFinished();
         
     }
 
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.GetComponent<Bullet>() && objective != EnemyObjective.Attack)
+        {
+            AdjustHP(-1);
+        }
+    }
+
     internal override void Attack()
     {
-        throw new NotImplementedException();
+        while(gun.Fire( EnemyController.GetClosestPlayerUnitPos(this) ));
+
+        Finish();
     }
+
+    public void Act()
+    {
+        active = true;
+        timeStartedMoving = Time.time;
+        startPos = transform.position;
+        sight.enabled = true;
+        
+        BattleManager.map.UpdatePathMapAvoidClaimedSpaces(this, EnemyController.units);
+        Vector3 closestPlayerPos = EnemyController.GetClosestPlayerUnitPos(this);
+
+        
+
+        if (!BattleManager.map.UpdateUnitPath(closestPlayerPos, this, false, 1))
+        {
+            Finish();
+        }
+
+        dest = path.Pop();
+    }
+
 }

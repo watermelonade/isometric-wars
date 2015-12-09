@@ -39,8 +39,9 @@ abstract public class Unit : MonoBehaviour
         Selected,
         Moving,
         Attacking
-
     }
+
+    
 
 	protected UnitState state;
 
@@ -56,6 +57,7 @@ abstract public class Unit : MonoBehaviour
     {
         GetComponent<Renderer>().material.color = Color.green;
     }
+
 
     public float GetHP()
     {

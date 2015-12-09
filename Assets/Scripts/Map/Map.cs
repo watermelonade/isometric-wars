@@ -39,18 +39,6 @@ public class Map : MonoBehaviour {
 
     CircleDraw circle;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-
-	// Update is called once per frame
-	void Update () {
-
-			
-	}
-
     void Build()
     {
         board = new GameObject[width, height];
@@ -135,8 +123,6 @@ public class Map : MonoBehaviour {
 		//while (sortedList.Count > 0)
 		while( priorityQueue.Count > 0)
 		{
-			//int[] u = (int[])sortedList.GetByIndex(0);
-			//sortedList.RemoveAt(0);
 
 			Coordinate c = priorityQueue.Dequeue();
 
@@ -180,16 +166,6 @@ public class Map : MonoBehaviour {
 
 		priorityQueue.Clear();
 
-		/*for (int x = 0; x < width; x++) {
-			for (int y = 0; y < height; y++) {
-
-				if(distanceMap[x,y] == 1)
-				{
-					GameObject cube = GameObject.CreatePrimitive (PrimitiveType.Cube);
-					cube.transform.position = new Vector3 ((float)x, 1F, (float)y);
-				}
-			}
-		}*/
 	}
 
 
@@ -210,22 +186,11 @@ public class Map : MonoBehaviour {
 			}
 		}
 
-
 		//Unit[] units = FindObjectsOfType(typeof(Unit)) as Unit[];
 		foreach (Unit unit in units) {
 			Vector3 unitPosition = unit.transform.position;
 			validSpacesMap[(int)unitPosition.x,(int)unitPosition.z] = false;
 		}
-
-		/*for (int x = 0; x < width; x++){
-			for (int y = 0; y < height; y++) { 
-				if(!validSpacesMap[x,y])
-				{
-					GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-					cube.transform.position = new Vector3(x, 1F, y);
-				}
-			}
-		}*/
 
 		distanceMap [currentX, currentY] = 0;
 		validSpacesMap [currentX, currentY] = true;
@@ -277,12 +242,6 @@ public class Map : MonoBehaviour {
 		}
 		priorityQueue.Clear();
 	}
-
-
-
-
-
-
 
 	public void UpdateUnitPath (Vector3 position, Unit currentUnit, bool showPath)
 	{

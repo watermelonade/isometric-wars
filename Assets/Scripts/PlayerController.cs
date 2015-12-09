@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour {
     List<Unit> units;
 
     Unit selectedUnit;
-    Map map;
+    //Map map;
 
     bool turn = false;
     bool unitSelected = false;
@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour {
     float unitsFinished = 0;
 
     public PlayerState state;
+    public static Plane mouseInputPlane;
 
     public enum PlayerState
     {
@@ -28,7 +29,9 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         state = PlayerState.ChooseUnit;
-	}
+        mouseInputPlane = new Plane(Vector3.zero + new Vector3(0, 3, 0),new Vector3(-1, .6f,0));
+        
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -45,7 +48,7 @@ public class PlayerController : MonoBehaviour {
             if(unitsFinished == units.Count)
             {
                 unitSelected = false;
-                map.RemovePath();
+                BattleManager.map.RemovePath();
                 turn = false;
                 unitsFinished = 0;
                 state = PlayerState.Finish;
@@ -62,7 +65,7 @@ public class PlayerController : MonoBehaviour {
 
     public void MoveUnits()
     {
-        map.RemovePlayerRange();
+        BattleManager.map.RemovePlayerRange();
         if (selectedUnit)
         {
             selectedUnit.Deselect();
@@ -86,8 +89,8 @@ public class PlayerController : MonoBehaviour {
         {
             if (state == PlayerState.UnitSelected)
             {
-                map.UpdateUnitPath(position, selectedUnit, true);
-                map.RemovePlayerRange();
+                BattleManager.map.UpdateUnitPath(position, selectedUnit, true);
+                BattleManager.map.RemovePlayerRange();
                 selectedUnit.Move();
             }
         }
@@ -96,7 +99,7 @@ public class PlayerController : MonoBehaviour {
     public void UnitChoosing()
     {
         state = PlayerController.PlayerState.UnitChoiceMenu;
-        map.RemovePath();
+        BattleManager.map.RemovePath();
     }
 
     public void UnitSelected(Unit unit)
@@ -105,7 +108,7 @@ public class PlayerController : MonoBehaviour {
         {
             if (selectedUnit)
             {
-                map.RemovePlayerRange();
+                BattleManager.map.RemovePlayerRange();
                 selectedUnit.Deselect();
             }
 
@@ -115,8 +118,8 @@ public class PlayerController : MonoBehaviour {
 
             selectedUnit = unit;
 
-            map.UpdatePathMap(selectedUnit);
-            map.ShowPlayerRange(unit.moveRange, unit.transform.position);
+            BattleManager.map.UpdatePathMap(selectedUnit);
+            BattleManager.map.ShowPlayerRange(unit.moveRange, unit.transform.position);
         }
     }
 
@@ -126,19 +129,17 @@ public class PlayerController : MonoBehaviour {
         state = PlayerState.ChooseUnit;
     }
 
-    public void SetMap(Map passedMap)
-    {
-        map = passedMap;
-    }
-
     void FinishTurn()
     {
         //turn = false;
         unitSelected = false;
-        map.RemovePath();
+        BattleManager.map.RemovePath();
         MoveUnits();
         //BattleManager.FinishTurn();
     }
 
-
+    public void UnitDied(GameObject obj)
+    {
+        units.Remove(obj.GetComponent<Unit>());
+    }
 }

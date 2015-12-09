@@ -17,7 +17,7 @@ public class BattleManager : MonoBehaviour {
     public Vector3 ePlayerStart2;
     public Vector3 ePlayerStart3;    
 
-    Map map;
+    public static Map map;
 
     public static bool endTurn = false;
     Vector3 dest;
@@ -50,11 +50,11 @@ public class BattleManager : MonoBehaviour {
 
         ec = gameObject.AddComponent<EnemyController>();
         ec.SetUnits(enemyUnits);
-        ec.SetMap(map);
+        //ec.SetMap(map);
 
         pc = gameObject.AddComponent<PlayerController>();
         pc.SetUnits(units);
-        pc.SetMap(map);
+        //pc.SetMap(map);
 
         pc.ActivateTurn();
         playerTurn = true;
