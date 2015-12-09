@@ -17,7 +17,7 @@ Abel: *groans*
 Cornelia: Abel! You okay?
 Abel: ...Like tenderized steak.
 Cornelia: Still tough enough to sass me, eh? Get moving! The tank's a goner!
-Abel: *F-word* hell... go! I'll grab Sophia!
+Abel: Oh, damn it all... go! I'll grab Sophia!
 
 [Scene change to woods]
 
@@ -32,25 +32,19 @@ Abel: Get down!
 Cornelia: Holy shit... that was close.
 Abel: Keep your head down. I'm taking a look.
 Cornelia: ...
-Abel: Seven of them.
-Cornelia: Is it the Guard?
-Abel: Yup.
+Abel: Seven of them. It's the Guard. We'll be in for a rough fight.
 Cornelia: ...Hey, Abel. You sure you don't want to let her go and then run for it?
 Abel: Sophia? Like hell!
 Cornelia: You might still be able to get away with just a prison sentence if you surrender her.
-Abel: Oh, come on.
+Abel: Oh, come on. Do you really think that those people are going to just let me off with jail time?
 Cornelia: It's a possibility!
 Abel: We've already committed to this path, Corny!
-Cornelia: But is it worth it?
+Cornelia: But is it worth it? You've worked hard for so long, Abel. To just throw it all away...
 Abel: ...I made up my mind when that boy died in my arms, Cornelia.
 Cornelia: ...You're a good man, Abel. I don't regret following you one bit. 
 Abel: I regret plenty.
 Cornelia: Hah... our final stand, then.
-Abel: No. We're not losing here.
-Cornelia: We're good, Abel, but we're not Knights.
-Abel: I know that.
-Cornelia: ...
-Abel: Corny, take the right.
+Abel: Corny, take the right. We're going to fight them off.
 Cornelia: Haha! Alright then, Abel! Let's do this one more time, you and me!
 
 [BATTLE START]
@@ -69,7 +63,7 @@ Abel: A sniper? On our side? Who on earth -
 Owen: Captain! Are you alright?
 Abel: Owen? What are you doing here? Was that you?
 Owen: Err...
-Abel: Why can't you stay put like you're told? I specifically told you -
+Abel: Why can't you stay put like you're told? Oh for God's sake, I specifically told you -
 Owen: We couldn't just leave you two...
 Abel: "We"?
 Owen: ...Me and Emilia.
@@ -77,7 +71,9 @@ Abel: Oh, for god's sake -
 Owen: I... I'm fighting with you, whether you like it or not! Give me my orders, Captain! I'm getting you out of here alive!
 Abel: ...I'm not your Captain anymore, Owen.
 Owen: Yes, you are.
-Abel: ...Stubborn brat. I'm counting on you, Owen.
+Abel: ...
+Owen: Your orders?
+Abel: ...I'm counting on you, then. Take the rear.
 Owen: Yes, sir!
 
 [WHEN OWEN ATTACKs AN ENEMY FOR THE FIRST TIME:]
@@ -127,7 +123,7 @@ Abel: Very funny. But I'm glad you're all here. As for our prisoner, here...
 Abel: All right, spill it.
 Sophia: You elite forces really do live up to your name.
 Abel: Cut the crap. What are you after?
-Sophia: Me?
+Sophia: Who, me?
 Abel: You and [ORG].
 Sophia: Can't say.
 Abel: Talk or you're gone. We don't have time to mess around.
@@ -144,13 +140,9 @@ Abel: Sacrifices? That's all people are to you? Sacrifices?
 Sophia: Everyone's a sacrifice for some greater ideal.
 Abel: Why did you kill him? Why did you kill my friend?
 Sophia: Which one?
-Abel: The Colonel!
-Sophia: He refused to listen to orders. He was a failure as a soldier.
-Abel: You bastards...
-Sophia: It's true.
-Abel: He was a great man. You killed him because you were scared of him!
-Sophia: Whatever you say.
-Cornelia: Abel, we should keep moving. We can question her later.
-Abel: Fine. But I'm going to get to the bottom of this. Whatever it takes, I'm going to stop this stupid war.
+Cornelia: Abel, we need to keep moving. We can question her later.
+Abel: ...
+Cornelia: Abel.
+Abel: Fine. Emilia, take the rear. Owen, keep an eye out for enemy scouts. Cornelia, you're with me. Let's get out of this stinking forest.
 
 ENDSCENE
