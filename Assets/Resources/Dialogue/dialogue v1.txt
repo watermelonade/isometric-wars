@@ -1,26 +1,30 @@
 [Scene inside of hovertank]
 
 Abel: Well, finally good news. Skies are clear, and the weather is lovely.
+Cornelia: We could use some good news.
+Abel: We haven't been getting much lately.
 Cornelia: And how many behind us?
-Abel: Oh, just one. You know, with the big cannon that can blow us to kingdom come.
+Abel: Oh, just one. You know, with the big cannon and all.
 Cornelia: They wouldn't fire to kill, would they?
-Abel: No idea. I'm not sure if they're too keen on rescuing little Sophia here alive or dead.
+Abel: No idea. I'm not sure if they're too keen on rescuing little Sophia here alive.
+Cornelia: Wouldn't they want her back?
+Abel: They're willing to assassinate. I hardly think they value lives -
 
 [Explosion rocks the screen]
 
-Cornelia: Gah! Direct hit... well, there's our answer. Abel! You OK?
+Cornelia: Gah! Direct hit... well, there's our answer. 
+Abel: *groans*
+Cornelia: Abel! You OK?
 Abel: ...Like tenderized steak.
 Cornelia: Your flavor aside, let's move! The tank's a goner! Next shot will be coming soon!
-Abel: Ugh, as if things could get any worse... go, go! I'll grab Sophia!
+Abel: Ugh, as if things could get any worse... go! I'll grab Sophia!
 
 [Scene change to woods]
 
-Abel: And to think that I was contemplating retirement a couple days ago.
+Abel: You know, I was contemplating retirement a couple days ago.
 Cornelia: You got enough energy to talk, you've got enough to walk. Anyone behind us?
-Abel: None in sight. Which can't be good.
+Abel: None in sight... Which can't be good.
 Cornelia: They've got a tank, and we're lost in the woods. Funny how things can reverse so quickly, eh?
-Abel: Hey, I know exactly where we ar-
-Cornelia: Heads up!
 
 [Explosion rocks the screen]
 
@@ -28,87 +32,97 @@ Cornelia: Looks like they're here. I count three on this side.
 Abel: Four over here. Well, this will be fun.
 Cornelia: Totally.
 Cornelia: ...Hey, Abel. You sure you don't want to let her go and then run for it?
-Abel: Sophia? Like hell. She assassinated the Colonel, did in Eva, and got our own side to try to kill us!
+Abel: Sophia? Like hell. She assassinated the Colonel, did in Eva, and got our own side to try to kill us! Information is the only thing we have left!
 Cornelia: You might still be able to get away with a prison sentence if you release her.
 Abel: Oh, come on.
 Cornelia: It's a possibility.
 Abel: I'm not going to pretend we never learned anything.
-Cornelia: Hah! You never cease to amaze me. I don't regret following you one bit. 
-Abel: I sure do.
+Cornelia: But is it worth it?
+Abel: I made up my mind when I saw that burned village, Cornelia. I knew what we had to do when I held that dying kid in my arms.
+Cornelia: Same. I'm glad you feel that way. I don't regret following you one bit. 
+Abel: I regret plenty.
 Cornelia: So what now? Stand and fight to our last breath?
-Abel: ...No. Even if they're our old comrades, we can't die here. We're going to stop this war.
+Abel: Even if they're our old comrades, we can't die here. We're going to stop this war. We'll fight and we'll live.
 Cornelia: And Sophia? There's no way we'll be able to secure her against this many men. Should we execute her?
-Abel: No. She's helpless now. I'm not gunning her down when she still has to pay for what she did.
-Cornelia: An impossible fight then! Haha, what a way to go out! Let's go Abel! You and me, one last time!
+Abel: No. She's helpless now. I'm not giving her the easy way out while she still has to pay for what she did.
+Cornelia: An impossible fight then! Haha, what a way to go out! Let's go Abel! You and me, one more time!
 
 [BATTLE START]
 
 [TURN 3]
 Abel: A sniper? On our side? Who on earth -
 Owen: Captain! Are you alright?
-Abel: Owen? What are you doing here? If you tell me that you're the one who shot him...
+Abel: Owen? What are you doing here? Was that you?
 Owen: Err...
 Abel: Oh, for god's sake. Why can't you stay put like you're told?
 Owen: We couldn't just leave you two...
 Abel: "We"?
-Owen: Me and Emilia.
+Owen: ...Me and Emilia.
 Abel: Oh, for god's sake -
-Owen: ...We're fighting with you, whether you like it or not! Give us our orders, Captain! We're getting you out of here alive!
-Abel: ...I guess there's no convincing you. I'm counting on you, Owen.
+Owen: I... I'm fighting with you, whether you like it or not! Give me my orders, Captain! I'm getting you out of here alive!
+Abel: Hah. I guess there's no convincing you. I'm counting on you, Owen.
 Owen: Yes sir!
 
 [AFTER ALL ENEMIES ELIMINATED]
 
-Cornelia: More of them coming in! They've brought along the tank as well!
+Cornelia: More of them coming in! Oh, there's the tank as well.
 Owen: Wait, what? A tank?
-Abel: Yes. You know, sits down and goes *bangbang* until we're all dead?
+Abel: Yes. Coming to finish the job. I guess they really want us dead.
 Cornelia: More infantry as well.
-Abel: So we have to take out 10 of our former friends, protect our prisoner, and bring down a tank. 
-Owen: Actually, I think there's 12 of them... 
+Abel: So we have to take out 10 trained soldiers, protect our prisoner, and bring down a tank. 
+Owen: I count 12, Captain!
 Abel: Right, ok. 12. 
-Cornelia: Don't forget the two snipers probably hiding in the trees. 
+Cornelia: Don't forget the two snipers hiding in the trees. 
 Abel: 14. How could my day get any better? 
 Emilia: There could be 2 tanks. 
 Abel: That's reassuring. 
 Emilia: Or 3 tanks. 
 Abel: ... 
 Emilia: Or - 
-Abel: Alright, alright, I get the point. Em, you take my flank. Owen, provide us support from cover. Cor, cover our rear. Let's get these bastards. We're going to get out of here.
+Abel: Alright, alright, I get the point. Em, you take my flank. Owen, provide us support from cover. Corn, cover our rear. Let's get these bastards. We're going to get out of here.
 
 [BATTLE END]
 
 Cornelia: That's the last of them.
-Abel: We've escaped for now.
+Abel: Hah... If we had done this in a real battle, we would definitely be swimming in medals.
 Cornelia: Well, where do we go? We've got no vehicle and we're dragging around a prisoner of war. Who do we even turn her in to?
-Abel: No one. It's just us now. Are you aware of that, Cornelia? Owen? Emilia?
+Abel: No one. It's just us now. 
+Cornelia: Us, and the world...
+Abel: Are you aware of that, Cornelia? Owen? Emilia?
 Owen: Yes. I am.
-Emilia: Just the way I like it.
+Emilia: Could be us against each other. We're not in the wrong, Captain.
 Cornelia: We're not leaving, Abel. You're stuck with us now.
-Abel: Oh man... If my old man saw me leading you guys, he'd have a fit. Anyways, I guess we might as well gather some information while we can.
+Abel: Oh man... If my old man saw me leading you guys, he'd have a fit. 
+Cornelia: I don't think his heart would be able to take another one.
+Abel: Very funny. But I'm glad you're all here. 
+Emilia: What now then, Sir?
+Abel: We gather some information while we can.
 
 [SOPHIA ENTERS ON RIGHT]
 
 Abel: There. You can talk now.
-Sophia: Nice weather we're having!
+Sophia: Wow, you elite forces really do live up to your name.
 Abel: Oh, cut the crap. Tell us what you know about this [ORG].
 Sophia: [ORG]? What's that?
 Abel: The reason you'll get shot if you don't talk.
-Sophia: Not telling~
+Sophia: Then I wouldn't be able to talk, would I?
 Abel: Oh, for god's sake. You have until three. One... two...
 Sophia: Why three?
-Abel: Because that's how many damns I give about you before I pull the trigger.
-Sophia: Seven's a better number. Or how about seventy?
+Abel: Because that's how many damns I can give before I pull the trigger.
+Sophia: That's a lot!
 Abel: Talk. Now.
-Sophia: Fine, fine. What do you want to know about us?
-Abel: What is your goal?
+Sophia: Fine, fine. You really should lighten up more.
+Abel: Look where that got me. What is your goal?
 Sophia: To bring down the Grohelm Empire.
 Abel: Why? You guys supplied us with our tanks. Our guns. This gun.
-Sophia: We hoped with your intelligence, you'd shoot yourselves on accident.
-Abel: Keep shooting your mouth, and your face is coming with it. Why did you kill Colonel Treas?
-Sophia: He found out. So we got rid of him.
+Sophia: We hoped that you guys would shoot yourselves. Humans are pretty good at that.
+Abel: And if you keep shooting your mouth, your face is coming with it. Why did you kill Colonel Treas?
+Sophia: He found out, so we got rid of him.
 Abel: You bastards would go that far...
-Sophia: Don't you do the same everyday you go out to fight? You basically just shot down over 15 people who were just following orders, you know.
-Abel: That's true. But I'm not one who will blindly follow orders. That's what you guys want, isn't it? For us to keep our heads down and go with the crowd.
+Sophia: Don't you do the same everyday you go out to fight? You just shot down brave men who were just following orders, you know.
+Abel: That's true. But I'm not one who will blindly follow orders. 
+Sophia: And now look at what you did. What are you going to tell their families? Their kids?
+Abel: That the responsibility lies on me. I'm not going to let [ORG] or whatever tear apart innocent lives.
 Cornelia: Abel, we should keep moving. We can question her later.
 Abel: Fine. But we're going to get to the bottom of this. And when we find out why this group is intent on reducing Grohelm to dust, we're going to teach them a lesson.
 

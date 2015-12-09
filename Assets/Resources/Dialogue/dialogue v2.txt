@@ -1,0 +1,156 @@
+[Scene inside of hovertank]
+
+Abel: Great news. Skies are clear, and we're right in the open.
+Cornelia: How many behind us?
+Abel: One big cannon, aiming right this way to blow us to kingdom come.
+Cornelia: Why don't you fire back, then?
+Abel: Then they'll catch up to us!
+Cornelia: Then keep your mouth shut and let me handle this!
+Abel: This is literally the worst...
+Cornelia: Oh? Since when did you become one of the Whitecaps? If I didn't know any better, I'd think you were from Athos -
+Abel: Just keep driving!
+
+[Explosion rocks the screen]
+
+Cornelia: Gah! Direct hit... You still alive, Abel?
+Abel: *groans*
+Cornelia: Abel! You okay?
+Abel: ...Like tenderized steak.
+Cornelia: Still tough enough to sass me, eh? Get moving! The tank's a goner!
+Abel: *F-word* hell... go! I'll grab Sophia!
+
+[Scene change to woods]
+
+Abel: You know, I was contemplating retirement a couple days ago...
+Cornelia: Save your energy. Anyone behind us?
+Abel: None in sight... Which can't be good.
+Cornelia: They've got a tank, and we're desperately trying to escape with a prisoner. The irony is killing -
+Abel: Get down!
+
+[Explosion rocks the screen]
+
+Cornelia: Holy shit... that was close.
+Abel: Keep your head down. I'm taking a look.
+Cornelia: ...
+Abel: Seven of them.
+Cornelia: Is it the Guard?
+Abel: Yup.
+Cornelia: ...Hey, Abel. You sure you don't want to let her go and then run for it?
+Abel: Sophia? Like hell!
+Cornelia: You might still be able to get away with just a prison sentence if you surrender her.
+Abel: Oh, come on.
+Cornelia: It's a possibility!
+Abel: We've already committed to this path, Corny!
+Cornelia: But is it worth it?
+Abel: ...I made up my mind when that boy died in my arms, Cornelia.
+Cornelia: ...You're a good man, Abel. I don't regret following you one bit. 
+Abel: I regret plenty.
+Cornelia: Hah... our final stand, then.
+Abel: No. We're not losing here.
+Cornelia: We're good, Abel, but we're not Knights.
+Abel: I know that.
+Cornelia: ...
+Abel: Corny, take the right.
+Cornelia: Haha! Alright then, Abel! Let's do this one more time, you and me!
+
+[BATTLE START]
+
+[Battle situation: enemies advance from top of map. Abel and Cornelia use an entrenched position to stay under cover and fire back.]
+
+[WHEN ABEL ATTACKs AN ENEMY FOR THE FIRST TIME:]
+Abel: C'mon!
+
+[WHEN CORNELIA ATTACKs AN ENEMY FOR THE FIRST TIME:]
+Cornelia: Come and get me!
+
+[TURN 3: Scripted attack from Owen, who spawns under cover behind Abel + Cornelia. He successfully kills an enemy by sniping him]
+
+Abel: A sniper? On our side? Who on earth -
+Owen: Captain! Are you alright?
+Abel: Owen? What are you doing here? Was that you?
+Owen: Err...
+Abel: Why can't you stay put like you're told? I specifically told you -
+Owen: We couldn't just leave you two...
+Abel: "We"?
+Owen: ...Me and Emilia.
+Abel: Oh, for god's sake -
+Owen: I... I'm fighting with you, whether you like it or not! Give me my orders, Captain! I'm getting you out of here alive!
+Abel: ...I'm not your Captain anymore, Owen.
+Owen: Yes, you are.
+Abel: ...Stubborn brat. I'm counting on you, Owen.
+Owen: Yes, sir!
+
+[WHEN OWEN ATTACKs AN ENEMY FOR THE FIRST TIME:]
+Owen: Don't hesitate... don't hesitate!
+
+[WHEN EMILIA ATTACKS AN ENEMY FOR THE FIRST TIME]
+Emilia: It's about time!
+
+[AFTER ALL ENEMIES ELIMINATED, new ones spawn]
+
+Cornelia: More of them coming in! Oh, there's the tank.
+Owen: Wait, what? A tank, too?
+Abel: Feel like running yet, Owen?
+Cornelia: 10 infantry as well.
+Abel: So 10 infantry and a tank.
+Owen: 2 more coming from our flank, Captain!
+Abel: Right, ok. 12. 
+Cornelia: I spot a sniper. Stay under cover.
+Abel: 13. How could my day get any better? 
+Emilia: There could be 2 tanks. 
+Abel: That's reassuring. 
+Emilia: Or 3 tanks. 
+Abel: ...
+Emilia: Or - 
+Abel: Alright, alright, I get the point. Owen, support from cover. Corny, suppress them. Em, take my flank. Let's get these bastards. We're going to get out of here.
+
+[BATTLE END]
+
+Cornelia: That's the last of them.
+Abel: Hah... If we had done this under orders, we would definitely be swimming in medals.
+Cornelia: Well congrats! We're getting bounties instead!
+Emilia: I wonder how large they'll be?
+Abel: Large enough to have the entire Empire after us.
+Cornelia: Well, what now? No transportation, no supplies, and a prisoner to take care of.
+Abel: It's just us now.
+Cornelia: Us vs the world? How romantic.
+Abel: I'm a renegade now. Not your Captain. Are you aware of that, Cornelia? Owen? Emilia?
+Owen: Yes. I am.
+Emilia: You're not in the wrong, Abel.
+Cornelia: We're not leaving, Abel. You're stuck with us now.
+Abel: Oh man... If my old man saw me leading you guys, he'd have a fit. 
+Cornelia: I don't think his heart would be able to take another one.
+Abel: Very funny. But I'm glad you're all here. As for our prisoner, here...
+
+[SOPHIA ENTERS ON RIGHT]
+
+Abel: All right, spill it.
+Sophia: You elite forces really do live up to your name.
+Abel: Cut the crap. What are you after?
+Sophia: Me?
+Abel: You and [ORG].
+Sophia: Can't say.
+Abel: Talk or you're gone. We don't have time to mess around.
+Sophia: Look, you don't know the whole picture. You're judging pretty quickly -
+Abel: I said, "Talk!"
+Sophia: Fine, fine. What do you want to know?
+Abel: Look where that got me. What is your goal?
+Sophia: To bring down the Grohelm Empire.
+Abel: Why? You guys supplied us with our tanks. Our guns. This gun.
+Sophia: It's for the greater good.
+Abel: You call this the greater good? Those dead men over there?
+Sophia: Sacrifices have to be made.
+Abel: Sacrifices? That's all people are to you? Sacrifices?
+Sophia: Everyone's a sacrifice for some greater ideal.
+Abel: Why did you kill him? Why did you kill my friend?
+Sophia: Which one?
+Abel: The Colonel!
+Sophia: He refused to listen to orders. He was a failure as a soldier.
+Abel: You bastards...
+Sophia: It's true.
+Abel: He was a great man. You killed him because you were scared of him!
+Sophia: Whatever you say.
+Cornelia: Abel, we should keep moving. We can question her later.
+Abel: Fine. But I'm going to get to the bottom of this. Whatever it takes, I'm going to stop this stupid war.
+
+ENDSCENE
